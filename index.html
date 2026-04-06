@@ -1,741 +1,549 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FCC 26 - نظام إدارة جداول المباريات EA FC 26</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <style>
-        * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI','Noto Sans Arabic',Tahoma,sans-serif; }
-        body { background:#0f172a; color:#e2e8f0; line-height:1.6; min-height:100vh; padding:20px; }
-        .container { max-width:1400px; margin:0 auto; }
-        .header { background:linear-gradient(135deg,rgba(10,25,50,.9),rgba(0,0,0,.95)); color:white; padding:25px 40px; border-radius:15px; margin-bottom:30px; box-shadow:0 4px 20px rgba(0,0,0,.6); border:1px solid rgba(59,130,246,.3); }
-        .header-content { display:flex; justify-content:space-between; align-items:center; }
-        .logo-section { display:flex; align-items:center; gap:20px; }
-        .logo { width:70px; height:70px; background:linear-gradient(135deg,#3b82f6,#1d4ed8); border-radius:12px; display:flex; align-items:center; justify-content:center; color:white; font-size:28px; font-weight:bold; box-shadow:0 4px 15px rgba(59,130,246,.4); }
-        .title-section h1 { font-size:28px; font-weight:700; margin-bottom:5px; }
-        .title-section p { color:#94a3b8; font-size:16px; }
-        .badge { background:rgba(59,130,246,.2); padding:8px 20px; border-radius:20px; font-size:14px; font-weight:600; border:1px solid rgba(59,130,246,.4); }
-        .main-grid { display:grid; grid-template-columns:1fr 1fr; gap:30px; margin-bottom:40px; }
-        @media (max-width:1024px) { .main-grid { grid-template-columns:1fr; } }
-        .card { background:rgba(15,23,42,.7); border-radius:15px; padding:30px; box-shadow:0 4px 20px rgba(0,0,0,.5); border:1px solid rgba(59,130,246,.2); backdrop-filter:blur(8px); }
-        .card-title { font-size:20px; color:#e2e8f0; margin-bottom:25px; padding-bottom:15px; border-bottom:2px solid rgba(59,130,246,.3); font-weight:600; }
-        .card-title i { color:#3b82f6; margin-left:10px; }
-        .form-group { margin-bottom:25px; }
-        .form-label { display:block; margin-bottom:8px; color:#cbd5e1; font-weight:600; font-size:15px; }
-        .form-control { width:100%; padding:14px 18px; border:2px solid rgba(59,130,246,.3); border-radius:10px; font-size:15px; background:rgba(30,41,59,.6); color:white; transition:all .3s; }
-        .form-control:focus { outline:none; border-color:#3b82f6; box-shadow:0 0 0 3px rgba(59,130,246,.3); }
-        .match-row { background:rgba(30,41,59,.5); border-radius:12px; padding:25px; margin-bottom:15px; border:1px solid rgba(59,130,246,.2); position:relative; }
-        .match-number { position:absolute; top:20px; right:20px; background:linear-gradient(135deg,#3b82f6,#1d4ed8); color:white; width:50px; height:50px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:bold; box-shadow:0 4px 15px rgba(59,130,246,.4); }
-        .player-input { text-align:center; padding:15px; background:rgba(15,23,42,.8); border:2px solid rgba(59,130,246,.3); border-radius:8px; color:white; font-size:16px; font-weight:500; width:100%; }
-        .vs-circle { width:60px; height:60px; background:linear-gradient(135deg,#3b82f6,#1d4ed8); border-radius:50%; display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:18px; box-shadow:0 4px 15px rgba(59,130,246,.5); }
-        .time-input-container { display:flex; align-items:center; justify-content:center; gap:10px; margin-top:15px; }
-        .time-input { padding:10px 20px; border:2px solid rgba(59,130,246,.3); border-radius:8px; background:rgba(15,23,42,.8); color:white; font-size:15px; width:120px; text-align:center; }
-        .am-pm-btn { padding:10px 15px; border:2px solid rgba(59,130,246,.3); border-radius:8px; background:rgba(15,23,42,.8); color:white; cursor:pointer; min-width:60px; }
-        .am-pm-btn.active { background:#3b82f6; border-color:#3b82f6; }
-        .remove-match { position:absolute; top:15px; left:15px; width:36px; height:36px; border-radius:8px; background:rgba(239,68,68,.2); border:none; color:#ef4444; cursor:pointer; }
-        .add-match-btn { width:100%; padding:16px; background:#3b82f6; color:white; border:none; border-radius:10px; font-size:16px; font-weight:600; cursor:pointer; }
-        .add-match-btn:hover { background:#2563eb; }
-        .control-buttons { display:flex; gap:15px; margin-top:30px; }
-        .btn { flex:1; padding:16px; border:none; border-radius:10px; font-size:16px; font-weight:600; cursor:pointer; }
-        .btn-preview { background:#10b981; color:white; }
-        .btn-download { background:#f59e0b; color:white; }
-        .font-size-controls { background:rgba(15,23,42,.5); border-radius:10px; padding:20px; margin-top:20px; border:1px solid rgba(59,130,246,.2); }
-        .font-size-options { display:flex; gap:15px; margin-top:10px; flex-wrap:wrap; }
-        .font-size-option { flex:1; min-width:100px; padding:12px; text-align:center; background:rgba(30,41,59,.6); border:2px solid rgba(59,130,246,.3); border-radius:8px; cursor:pointer; color:#e2e8f0; }
-        .font-size-option.selected { background:#3b82f6; border-color:#3b82f6; }
-        .preview-section { background:rgba(15,23,42,.7); border-radius:15px; padding:30px; box-shadow:0 4px 20px rgba(0,0,0,.5); border:1px solid rgba(59,130,246,.2); min-height:700px; }
-        .preview-table { width:100%; border-collapse:collapse; margin-top:30px; color:white; }
-        .preview-table th { background:rgba(30,58,138,.6); padding:18px; text-align:center; border-bottom:2px solid rgba(59,130,246,.4); }
-        .preview-table td { padding:20px; text-align:center; border-bottom:1px solid rgba(59,130,246,.2); }
-        .match-number-cell { background:linear-gradient(135deg,#3b82f6,#1d4ed8); color:white; font-weight:bold; font-size:20px; border-radius:50%; width:50px; height:50px; display:flex; align-items:center; justify-content:center; margin:0 auto; }
-        .vs-cell { background:rgba(59,130,246,.3); padding:8px 24px; border-radius:999px; font-weight:bold; }
-        .time-cell { background:rgba(255,255,255,.08); padding:10px 20px; border-radius:8px; }
-        .empty-message { text-align:center; padding:100px 20px; color:#94a3b8; }
-        .empty-message i { font-size:5rem; opacity:.4; }
-        .footer { text-align:center; margin-top:50px; padding-top:30px; border-top:1px solid rgba(59,130,246,.2); color:#94a3b8; font-size:14px; }
-        .two-columns-container { display:flex; gap:30px; width:100%; margin-top:20px; }
-        .column { flex:1; }
-        .column-title { text-align:center; font-size:1.4rem; margin-bottom:20px; color:#e2e8f0; padding-bottom:10px; border-bottom:2px solid rgba(59,130,246,.3); }
-        .attendance-checkbox { display:inline-block; margin-right:10px; }
-        .checkbox-container { position:relative; display:inline-block; }
-        .attendance-label { display:flex; align-items:center; gap:8px; cursor:pointer; }
-        .attendance-checkbox-input { display:none; }
-        .custom-checkbox { width:22px; height:22px; border:2px solid rgba(59,130,246,.5); border-radius:5px; display:flex; align-items:center; justify-content:center; transition:all 0.3s; }
-        .attendance-checkbox-input:checked + .custom-checkbox { background:#10b981; border-color:#10b981; }
-        .attendance-checkbox-input:checked + .custom-checkbox::after { content:'✓'; color:white; font-weight:bold; }
-        .player-with-checkbox { display:flex; align-items:center; justify-content:center; gap:10px; }
-        .attendance-controls { background:rgba(15,23,42,.5); border-radius:10px; padding:15px; margin-top:20px; border:1px solid rgba(59,130,246,.2); }
-        .attendance-buttons { display:flex; gap:10px; margin-top:10px; }
-        .attendance-btn { flex:1; padding:10px; border:none; border-radius:8px; background:#3b82f6; color:white; cursor:pointer; font-size:14px; }
-        .attendance-btn.clear { background:#ef4444; }
-        .attendance-btn.check-all { background:#10b981; }
-        .white-checkbox { background:white !important; border:1px solid #94a3b8 !important; }
-        .table-controls { background:rgba(15,23,42,.7); border-radius:15px; padding:20px; margin-top:30px; border:1px solid rgba(59,130,246,.3); }
-        .table-controls-title { font-size:18px; color:#e2e8f0; margin-bottom:15px; text-align:center; }
-        .table-control-buttons { display:flex; gap:15px; justify-content:center; flex-wrap:wrap; }
-        .table-control-btn { padding:12px 20px; border:none; border-radius:10px; font-size:15px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:8px; min-width:140px; justify-content:center; }
-        .table-control-btn.table1 { background:linear-gradient(135deg,#3b82f6,#1d4ed8); color:white; }
-        .table-control-btn.table2 { background:linear-gradient(135deg,#10b981,#059669); color:white; }
-        .table-control-btn.reset { background:linear-gradient(135deg,#f59e0b,#d97706); color:white; }
-        .table-control-btn:hover { opacity:0.9; transform:translateY(-2px); transition:all 0.3s; }
-        .scale-info { text-align:center; color:#94a3b8; margin-top:15px; font-size:14px; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <header class="header">
-            <div class="header-content">
-                <div class="logo-section">
-                    <div class="logo">FC</div>
-                    <div class="title-section">
-                        <h1>بطولة FCC 26 - EA FC 26</h1>
-                        <p>جدول المباريات - النسخة الاحترافية</p>
-                    </div>
-                </div>
-                <div class="badge">EA SPORTS FC™ 26</div>
-            </div>
-        </header>
 
-        <div class="main-grid">
-            <div class="card">
-                <h2 class="card-title"><i class="fas fa-cog"></i> إعدادات البطولة</h2>
-                <div class="form-group">
-                    <label class="form-label">اسم البطولة</label>
-                    <input type="text" id="tournament-title" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">تاريخ ووقت البطولة</label>
-                    <input type="datetime-local" id="tournament-date" class="form-control">
-                </div>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI','Noto Sans Arabic',Tahoma,sans-serif; }
+  :root {
+    --fifa-primary: #1a3a6b; --fifa-accent: #00d4ff; --fifa-bg: linear-gradient(135deg, #0a1628 0%, #1a3a6b 50%, #0d2040 100%);
+    --rl-primary: #ff4500; --rl-accent: #ffaa00; --rl-bg: linear-gradient(135deg, #1a0a00 0%, #3d1000 50%, #1a0500 100%);
+    --tekken-primary: #8b0000; --tekken-accent: #ff6b35; --tekken-bg: linear-gradient(135deg, #0a0005 0%, #2d0020 50%, #1a0010 100%);
+  }
+  body { background:#0f172a; color:#e2e8f0; min-height:100vh; }
 
-                <h2 class="card-title" style="margin-top:40px;"><i class="fas fa-futbol"></i> إدارة المباريات</h2>
-                <div id="matches-container"></div>
-                <button id="add-match-btn" class="add-match-btn">
-                    <i class="fas fa-plus"></i> إضافة مباراة جديدة
-                </button>
-            </div>
+  .app-header { padding:20px 24px; background:rgba(0,0,0,0.6); border-bottom:1px solid rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:space-between; }
+  .app-title { font-size:22px; font-weight:500; color:#fff; }
+  .app-subtitle { font-size:13px; color:#94a3b8; margin-top:2px; }
+  .app-badge { background:rgba(59,130,246,0.2); border:1px solid rgba(59,130,246,0.4); padding:6px 16px; border-radius:20px; font-size:13px; color:#93c5fd; }
 
-            <div class="card">
-                <h2 class="card-title"><i class="fas fa-eye"></i> معاينة وتحميل</h2>
-                <p style="color:#94a3b8; margin-bottom:20px;">خلفية محلية (fc26.png)</p>
-                
-                <div class="font-size-controls">
-                    <label class="form-label">اختيار حجم الخط في المعاينة و PDF:</label>
-                    <div class="font-size-options">
-                        <div class="font-size-option selected" data-size="normal">عادي</div>
-                        <div class="font-size-option" data-size="medium">متوسط</div>
-                        <div class="font-size-option" data-size="large">كبير</div>
-                        <div class="font-size-option" data-size="xlarge">كبير جداً</div>
-                    </div>
-                </div>
-                
-                <div class="control-buttons">
-                    <button id="preview-btn" class="btn btn-preview">
-                        <i class="fas fa-eye"></i> معاينة الجدول
-                    </button>
-                    <button id="download-btn" class="btn btn-download">
-                        <i class="fas fa-download"></i> تحميل PDF
-                    </button>
-                </div>
-            </div>
+  .game-tabs { display:flex; gap:4px; padding:16px 24px; background:rgba(0,0,0,0.4); border-bottom:1px solid rgba(255,255,255,0.08); overflow-x:auto; }
+  .game-tab { flex:1; min-width:120px; padding:12px 8px; border:none; border-radius:10px; cursor:pointer; font-size:13px; font-weight:500; display:flex; flex-direction:column; align-items:center; gap:6px; transition:all 0.3s; background:rgba(255,255,255,0.05); color:#94a3b8; border:1px solid transparent; }
+  .game-tab .tab-icon { font-size:22px; }
+  .game-tab .tab-name { font-size:12px; }
+  .game-tab .tab-badge { font-size:10px; padding:2px 8px; border-radius:10px; }
+  .game-tab.active-fifa { background:rgba(0,212,255,0.15); border-color:rgba(0,212,255,0.4); color:#00d4ff; }
+  .game-tab.active-rl { background:rgba(255,69,0,0.15); border-color:rgba(255,170,0,0.4); color:#ffaa00; }
+  .game-tab.active-tekken { background:rgba(139,0,0,0.25); border-color:rgba(255,107,53,0.4); color:#ff6b35; }
+
+  .section { display:none; min-height:600px; }
+  .section.active { display:block; }
+
+  .fifa-section { background: linear-gradient(180deg, #0a1628 0%, #0d1f3d 100%); }
+  .rl-section { background: linear-gradient(180deg, #1a0800 0%, #0d0500 100%); }
+  .tekken-section { background: linear-gradient(180deg, #0a0010 0%, #150020 100%); }
+
+  .section-hero { padding:24px; position:relative; overflow:hidden; }
+  .fifa-hero { background: linear-gradient(135deg, rgba(0,60,120,0.8) 0%, rgba(0,20,60,0.9) 100%); border-bottom:2px solid #00d4ff; }
+  .rl-hero { background: linear-gradient(135deg, rgba(100,20,0,0.8) 0%, rgba(50,5,0,0.9) 100%); border-bottom:2px solid #ff6600; }
+  .tekken-hero { background: linear-gradient(135deg, rgba(80,0,20,0.8) 0%, rgba(30,0,15,0.9) 100%); border-bottom:2px solid #ff4488; }
+
+  .hero-grid { display:flex; align-items:center; gap:20px; }
+  .hero-logo { width:64px; height:64px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:26px; font-weight:700; flex-shrink:0; }
+  .fifa-logo-bg { background:linear-gradient(135deg,#003c78,#0066cc); border:2px solid #00d4ff; color:#00d4ff; }
+  .rl-logo-bg { background:linear-gradient(135deg,#4d1200,#ff4500); border:2px solid #ffaa00; color:#ffaa00; }
+  .tekken-logo-bg { background:linear-gradient(135deg,#3d0015,#8b0000); border:2px solid #ff6b35; color:#ff6b35; }
+
+  .hero-info h2 { font-size:20px; font-weight:500; }
+  .hero-info p { font-size:13px; margin-top:4px; opacity:0.7; }
+  .hero-stats { display:flex; gap:16px; margin-top:12px; }
+  .hero-stat { text-align:center; }
+  .hero-stat .num { font-size:20px; font-weight:500; }
+  .hero-stat .lbl { font-size:11px; opacity:0.6; }
+
+  .section-content { display:grid; grid-template-columns:340px 1fr; gap:0; min-height:500px; }
+  @media(max-width:900px) { .section-content { grid-template-columns:1fr; } }
+
+  .sidebar { padding:20px; border-left:1px solid rgba(255,255,255,0.08); }
+  .fifa-sidebar { background:rgba(0,30,80,0.4); }
+  .rl-sidebar { background:rgba(50,10,0,0.4); }
+  .tekken-sidebar { background:rgba(40,0,20,0.4); }
+
+  .sidebar-title { font-size:14px; font-weight:500; margin-bottom:14px; display:flex; align-items:center; gap:8px; }
+  .dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+  .dot-fifa { background:#00d4ff; }
+  .dot-rl { background:#ffaa00; }
+  .dot-tekken { background:#ff6b35; }
+
+  .form-group { margin-bottom:16px; }
+  .form-label { display:block; font-size:12px; color:#94a3b8; margin-bottom:6px; }
+  .form-input { width:100%; padding:10px 12px; border-radius:8px; font-size:14px; background:rgba(255,255,255,0.07); color:white; border:1px solid rgba(255,255,255,0.12); transition:border-color 0.2s; }
+  .form-input:focus { outline:none; }
+  .fifa-input:focus { border-color:#00d4ff; }
+  .rl-input:focus { border-color:#ffaa00; }
+  .tekken-input:focus { border-color:#ff6b35; }
+
+  .btn { padding:10px 16px; border:none; border-radius:8px; font-size:13px; font-weight:500; cursor:pointer; display:flex; align-items:center; gap:6px; transition:all 0.2s; width:100%; justify-content:center; margin-bottom:8px; }
+  .btn-fifa { background:#00d4ff; color:#001a3d; }
+  .btn-fifa:hover { background:#00b8e0; }
+  .btn-rl { background:#ff6600; color:#fff; }
+  .btn-rl:hover { background:#e55500; }
+  .btn-tekken { background:#cc2255; color:#fff; }
+  .btn-tekken:hover { background:#aa1a44; }
+  .btn-secondary { background:rgba(255,255,255,0.08); color:#e2e8f0; border:1px solid rgba(255,255,255,0.12); }
+  .btn-secondary:hover { background:rgba(255,255,255,0.13); }
+
+  .matches-panel { padding:20px; overflow-y:auto; }
+  .matches-title { font-size:14px; font-weight:500; margin-bottom:14px; display:flex; align-items:center; justify-content:space-between; }
+  .match-count { font-size:11px; padding:3px 10px; border-radius:10px; }
+  .fifa-count { background:rgba(0,212,255,0.15); color:#00d4ff; border:1px solid rgba(0,212,255,0.3); }
+  .rl-count { background:rgba(255,170,0,0.15); color:#ffaa00; border:1px solid rgba(255,170,0,0.3); }
+  .tekken-count { background:rgba(255,107,53,0.15); color:#ff6b35; border:1px solid rgba(255,107,53,0.3); }
+
+  .match-card { border-radius:10px; padding:14px; margin-bottom:10px; display:flex; align-items:center; gap:12px; position:relative; }
+  .fifa-card { background:rgba(0,50,120,0.25); border:1px solid rgba(0,212,255,0.2); }
+  .rl-card { background:rgba(80,20,0,0.3); border:1px solid rgba(255,100,0,0.2); }
+  .tekken-card { background:rgba(60,0,20,0.3); border:1px solid rgba(255,60,80,0.2); }
+
+  .match-num { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:500; flex-shrink:0; }
+  .num-fifa { background:linear-gradient(135deg,#003c78,#0066cc); color:#00d4ff; border:1px solid rgba(0,212,255,0.4); }
+  .num-rl { background:linear-gradient(135deg,#4d1200,#cc3300); color:#ffaa00; border:1px solid rgba(255,170,0,0.4); }
+  .num-tekken { background:linear-gradient(135deg,#3d0015,#880030); color:#ff6b35; border:1px solid rgba(255,107,53,0.4); }
+
+  .match-players { flex:1; display:flex; align-items:center; gap:8px; }
+  .player-input-sm { flex:1; padding:7px 10px; border-radius:6px; font-size:13px; background:rgba(255,255,255,0.07); color:white; border:1px solid rgba(255,255,255,0.1); text-align:center; }
+  .vs-badge { padding:3px 10px; border-radius:6px; font-size:11px; font-weight:600; flex-shrink:0; }
+  .vs-fifa { background:rgba(0,212,255,0.2); color:#00d4ff; }
+  .vs-rl { background:rgba(255,150,0,0.2); color:#ffaa00; }
+  .vs-tekken { background:rgba(255,60,80,0.2); color:#ff6b35; }
+
+  .time-sm { width:70px; padding:7px 6px; border-radius:6px; font-size:12px; background:rgba(255,255,255,0.06); color:white; border:1px solid rgba(255,255,255,0.1); text-align:center; }
+  .del-btn { width:26px; height:26px; border-radius:6px; background:rgba(239,68,68,0.15); border:none; color:#f87171; cursor:pointer; font-size:14px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .del-btn:hover { background:rgba(239,68,68,0.3); }
+
+  .empty-state { text-align:center; padding:60px 20px; color:#4b5563; }
+  .empty-icon { font-size:48px; margin-bottom:12px; opacity:0.4; }
+
+  .preview-overlay { position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.85); z-index:100; display:flex; align-items:center; justify-content:center; padding:20px; }
+  .preview-modal { width:100%; max-width:900px; max-height:90vh; overflow-y:auto; border-radius:16px; }
+
+  .font-controls { display:flex; gap:6px; margin-top:10px; }
+  .font-btn { flex:1; padding:6px; border-radius:6px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.05); color:#94a3b8; cursor:pointer; font-size:11px; text-align:center; }
+  .font-btn.active { color:white; }
+  .fifa-font-active { background:rgba(0,212,255,0.2); border-color:rgba(0,212,255,0.4); }
+  .rl-font-active { background:rgba(255,170,0,0.2); border-color:rgba(255,170,0,0.4); }
+  .tekken-font-active { background:rgba(255,107,53,0.2); border-color:rgba(255,107,53,0.4); }
+</style>
+
+<div class="app-header">
+  <div>
+    <div class="app-title">🏆 نظام بطولات متعدد الألعاب</div>
+    <div class="app-subtitle">FCC 26 — إدارة جداول المباريات الاحترافية</div>
+  </div>
+  <div class="app-badge">FCC 26 PRO</div>
+</div>
+
+<div class="game-tabs">
+  <button class="game-tab active-fifa" id="tab-fifa" onclick="switchGame('fifa')">
+    <span class="tab-icon">⚽</span>
+    <span class="tab-name">EA FC 26</span>
+    <span class="tab-badge" id="badge-fifa" style="background:rgba(0,212,255,0.15);color:#00d4ff;">0 مباراة</span>
+  </button>
+  <button class="game-tab" id="tab-rl" onclick="switchGame('rl')">
+    <span class="tab-icon">🚗</span>
+    <span class="tab-name">Rocket League</span>
+    <span class="tab-badge" id="badge-rl" style="background:rgba(255,170,0,0.1);color:#ffaa00;">0 مباراة</span>
+  </button>
+  <button class="game-tab" id="tab-tekken" onclick="switchGame('tekken')">
+    <span class="tab-icon">👊</span>
+    <span class="tab-name">Tekken</span>
+    <span class="tab-badge" id="badge-tekken" style="background:rgba(255,107,53,0.1);color:#ff6b35;">0 مباراة</span>
+  </button>
+</div>
+
+<!-- FIFA Section -->
+<div class="section fifa-section active" id="section-fifa">
+  <div class="section-hero fifa-hero">
+    <div class="hero-grid">
+      <div class="hero-logo fifa-logo-bg">FC</div>
+      <div class="hero-info">
+        <h2 style="color:#00d4ff;">قسم EA FC 26</h2>
+        <p>بطولة كرة القدم الافتراضية الاحترافية</p>
+        <div class="hero-stats">
+          <div class="hero-stat"><div class="num" style="color:#00d4ff;" id="fifa-total">0</div><div class="lbl">مباراة</div></div>
+          <div class="hero-stat"><div class="num" style="color:#00d4ff;" id="fifa-players-count">0</div><div class="lbl">لاعب</div></div>
         </div>
-
-        <div class="preview-section">
-            <div id="preview-container">
-                <div class="empty-message">
-                    <i class="fas fa-calendar-alt"></i>
-                    <h3>اضغط "معاينة الجدول" بعد إضافة المباريات</h3>
-                </div>
-            </div>
-        </div>
-
-        <!-- أزرار التحكم في تقليص الجداول -->
-        <div class="table-controls">
-            <h3 class="table-controls-title"><i class="fas fa-compress-alt"></i> التحكم في حجم الجداول للترتيب في الصورة</h3>
-            <div class="table-control-buttons">
-                <button id="shrink-table1-btn" class="table-control-btn table1">
-                    <i class="fas fa-minus-circle"></i> تقليص الجدول 1
-                </button>
-                <button id="expand-table1-btn" class="table-control-btn table1">
-                    <i class="fas fa-plus-circle"></i> تكبير الجدول 1
-                </button>
-                <button id="shrink-table2-btn" class="table-control-btn table2">
-                    <i class="fas fa-minus-circle"></i> تقليص الجدول 2
-                </button>
-                <button id="expand-table2-btn" class="table-control-btn table2">
-                    <i class="fas fa-plus-circle"></i> تكبير الجدول 2
-                </button>
-                <button id="reset-tables-btn" class="table-control-btn reset">
-                    <i class="fas fa-sync-alt"></i> إعادة الضبط
-                </button>
-            </div>
-            <div class="scale-info">
-                <p>الاستخدام: تقليص الجداول لتوزيعها بشكل أفضل في الصورة</p>
-                <p id="current-scales">مستويات التقليص الحالية: الجدول 1: 100% | الجدول 2: 100%</p>
-            </div>
-        </div>
-
-        <footer class="footer">
-            <p>© 2026 نظام جداول FCC 26 - مستوحى من EA SPORTS FC™ 26</p>
-        </footer>
+      </div>
     </div>
+  </div>
+  <div class="section-content">
+    <div class="sidebar fifa-sidebar">
+      <div class="sidebar-title"><span class="dot dot-fifa"></span> إعدادات البطولة</div>
+      <div class="form-group">
+        <label class="form-label">اسم البطولة</label>
+        <input type="text" class="form-input fifa-input" id="fifa-title" placeholder="مثال: بطولة الربيع 2026">
+      </div>
+      <div class="form-group">
+        <label class="form-label">التاريخ والوقت</label>
+        <input type="datetime-local" class="form-input fifa-input" id="fifa-date">
+      </div>
+      <div class="form-group">
+        <label class="form-label">المكان</label>
+        <input type="text" class="form-input fifa-input" id="fifa-venue" placeholder="مثال: الرياض - قاعة الألعاب">
+      </div>
+      <div class="form-group">
+        <label class="form-label">حجم الخط</label>
+        <div class="font-controls" id="fifa-font-controls">
+          <div class="font-btn active fifa-font-active" data-size="normal" onclick="setFontSize('fifa','normal',this)">عادي</div>
+          <div class="font-btn" data-size="medium" onclick="setFontSize('fifa','medium',this)">متوسط</div>
+          <div class="font-btn" data-size="large" onclick="setFontSize('fifa','large',this)">كبير</div>
+          <div class="font-btn" data-size="xlarge" onclick="setFontSize('fifa','xlarge',this)">جداً</div>
+        </div>
+      </div>
+      <button class="btn btn-fifa" onclick="addMatch('fifa')">+ إضافة مباراة</button>
+      <button class="btn btn-secondary" onclick="showPreview('fifa')">👁 معاينة الجدول</button>
+      <button class="btn btn-secondary" onclick="downloadPDF('fifa')">⬇ تحميل PDF</button>
+    </div>
+    <div class="matches-panel">
+      <div class="matches-title">
+        <span>قائمة المباريات</span>
+        <span class="match-count fifa-count" id="fifa-count-badge">0 مباراة</span>
+      </div>
+      <div id="fifa-matches">
+        <div class="empty-state">
+          <div class="empty-icon">⚽</div>
+          <p>لا توجد مباريات بعد</p>
+          <p style="font-size:12px;margin-top:6px;color:#6b7280;">اضغط "إضافة مباراة" للبدء</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-    <script>
-        let matches = [];
-        const matchesContainer = document.getElementById('matches-container');
-        const addMatchBtn = document.getElementById('add-match-btn');
-        const previewBtn = document.getElementById('preview-btn');
-        const downloadBtn = document.getElementById('download-btn');
-        const previewContainer = document.getElementById('preview-container');
-        let selectedFontSize = 'normal';
-        
-        // متغيرات التحكم في تقليص الجداول
-        let table1Scale = 1.0;
-        let table2Scale = 1.0;
-        const table1ScaleStep = 0.1; // خطوة تقليص/تكبير الجدول 1
-        const table2ScaleStep = 0.1; // خطوة تقليص/تكبير الجدول 2
-        const minScale = 0.6; // الحد الأدنى للتقليص
-        const maxScale = 1.2; // الحد الأقصى للتكبير
+<!-- Rocket League Section -->
+<div class="section rl-section" id="section-rl">
+  <div class="section-hero rl-hero">
+    <div class="hero-grid">
+      <div class="hero-logo rl-logo-bg">RL</div>
+      <div class="hero-info">
+        <h2 style="color:#ffaa00;">قسم Rocket League</h2>
+        <p>بطولة كرة القدم بالسيارات المجنونة</p>
+        <div class="hero-stats">
+          <div class="hero-stat"><div class="num" style="color:#ffaa00;" id="rl-total">0</div><div class="lbl">مباراة</div></div>
+          <div class="hero-stat"><div class="num" style="color:#ffaa00;" id="rl-players-count">0</div><div class="lbl">لاعب</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section-content">
+    <div class="sidebar rl-sidebar">
+      <div class="sidebar-title"><span class="dot dot-rl"></span> إعدادات البطولة</div>
+      <div class="form-group">
+        <label class="form-label">اسم البطولة</label>
+        <input type="text" class="form-input rl-input" id="rl-title" placeholder="مثال: بطولة RL الخليج">
+      </div>
+      <div class="form-group">
+        <label class="form-label">التاريخ والوقت</label>
+        <input type="datetime-local" class="form-input rl-input" id="rl-date">
+      </div>
+      <div class="form-group">
+        <label class="form-label">المكان</label>
+        <input type="text" class="form-input rl-input" id="rl-venue" placeholder="مثال: جدة - مركز الترفيه">
+      </div>
+      <div class="form-group">
+        <label class="form-label">حجم الخط</label>
+        <div class="font-controls" id="rl-font-controls">
+          <div class="font-btn active rl-font-active" data-size="normal" onclick="setFontSize('rl','normal',this)">عادي</div>
+          <div class="font-btn" data-size="medium" onclick="setFontSize('rl','medium',this)">متوسط</div>
+          <div class="font-btn" data-size="large" onclick="setFontSize('rl','large',this)">كبير</div>
+          <div class="font-btn" data-size="xlarge" onclick="setFontSize('rl','xlarge',this)">جداً</div>
+        </div>
+      </div>
+      <button class="btn btn-rl" onclick="addMatch('rl')">+ إضافة مباراة</button>
+      <button class="btn btn-secondary" onclick="showPreview('rl')">👁 معاينة الجدول</button>
+      <button class="btn btn-secondary" onclick="downloadPDF('rl')">⬇ تحميل PDF</button>
+    </div>
+    <div class="matches-panel">
+      <div class="matches-title">
+        <span>قائمة المباريات</span>
+        <span class="match-count rl-count" id="rl-count-badge">0 مباراة</span>
+      </div>
+      <div id="rl-matches">
+        <div class="empty-state">
+          <div class="empty-icon">🚗</div>
+          <p>لا توجد مباريات بعد</p>
+          <p style="font-size:12px;margin-top:6px;color:#6b7280;">اضغط "إضافة مباراة" للبدء</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-        // دالة لتحديث عرض مستويات التقليص
-        function updateScaleDisplay() {
-            const scalesInfo = document.getElementById('current-scales');
-            scalesInfo.textContent = `مستويات التقليص الحالية: الجدول 1: ${Math.round(table1Scale * 100)}% | الجدول 2: ${Math.round(table2Scale * 100)}%`;
-        }
+<!-- Tekken Section -->
+<div class="section tekken-section" id="section-tekken">
+  <div class="section-hero tekken-hero">
+    <div class="hero-grid">
+      <div class="hero-logo tekken-logo-bg">TK</div>
+      <div class="hero-info">
+        <h2 style="color:#ff6b35;">قسم Tekken</h2>
+        <p>بطولة القتال الأسطورية</p>
+        <div class="hero-stats">
+          <div class="hero-stat"><div class="num" style="color:#ff6b35;" id="tekken-total">0</div><div class="lbl">مباراة</div></div>
+          <div class="hero-stat"><div class="num" style="color:#ff6b35;" id="tekken-players-count">0</div><div class="lbl">لاعب</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section-content">
+    <div class="sidebar tekken-sidebar">
+      <div class="sidebar-title"><span class="dot dot-tekken"></span> إعدادات البطولة</div>
+      <div class="form-group">
+        <label class="form-label">اسم البطولة</label>
+        <input type="text" class="form-input tekken-input" id="tekken-title" placeholder="مثال: بطولة الفحول - Tekken">
+      </div>
+      <div class="form-group">
+        <label class="form-label">التاريخ والوقت</label>
+        <input type="datetime-local" class="form-input tekken-input" id="tekken-date">
+      </div>
+      <div class="form-group">
+        <label class="form-label">المكان</label>
+        <input type="text" class="form-input tekken-input" id="tekken-venue" placeholder="مثال: الدمام - كافيه الألعاب">
+      </div>
+      <div class="form-group">
+        <label class="form-label">حجم الخط</label>
+        <div class="font-controls" id="tekken-font-controls">
+          <div class="font-btn active tekken-font-active" data-size="normal" onclick="setFontSize('tekken','normal',this)">عادي</div>
+          <div class="font-btn" data-size="medium" onclick="setFontSize('tekken','medium',this)">متوسط</div>
+          <div class="font-btn" data-size="large" onclick="setFontSize('tekken','large',this)">كبير</div>
+          <div class="font-btn" data-size="xlarge" onclick="setFontSize('tekken','xlarge',this)">جداً</div>
+        </div>
+      </div>
+      <button class="btn btn-tekken" onclick="addMatch('tekken')">+ إضافة مباراة</button>
+      <button class="btn btn-secondary" onclick="showPreview('tekken')">👁 معاينة الجدول</button>
+      <button class="btn btn-secondary" onclick="downloadPDF('tekken')">⬇ تحميل PDF</button>
+    </div>
+    <div class="matches-panel">
+      <div class="matches-title">
+        <span>قائمة المباريات</span>
+        <span class="match-count tekken-count" id="tekken-count-badge">0 مباراة</span>
+      </div>
+      <div id="tekken-matches">
+        <div class="empty-state">
+          <div class="empty-icon">👊</div>
+          <p>لا توجد مباريات بعد</p>
+          <p style="font-size:12px;margin-top:6px;color:#6b7280;">اضغط "إضافة مباراة" للبدء</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-        // دالة لتحويل الوقت من 12 ساعة إلى 24 ساعة
-        function convertTo24Hour(time12h, period) {
-            if (!time12h) return '';
-            
-            const [hours, minutes] = time12h.split(':').map(Number);
-            let hours24 = hours;
-            
-            if (period === 'PM' && hours < 12) {
-                hours24 = hours + 12;
-            } else if (period === 'AM' && hours === 12) {
-                hours24 = 0;
-            }
-            
-            return `${hours24.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
-        }
+<!-- Preview Modal -->
+<div class="preview-overlay" id="preview-overlay" style="display:none;" onclick="closePreview(event)">
+  <div class="preview-modal" id="preview-modal" onclick="e=>e.stopPropagation()"></div>
+</div>
 
-        // دالة لتحويل الوقت من 24 ساعة إلى 12 ساعة
-        function convertTo12Hour(time24h) {
-            if (!time24h) return { time: '19:00', period: 'PM' };
-            
-            const [hours, minutes] = time24h.split(':').map(Number);
-            let period = 'AM';
-            let hours12 = hours;
-            
-            if (hours >= 12) {
-                period = 'PM';
-                if (hours > 12) {
-                    hours12 = hours - 12;
-                }
-            } else if (hours === 0) {
-                hours12 = 12;
-            }
-            
-            return {
-                time: `${hours12.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`,
-                period: period
-            };
-        }
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+const gameData = {
+  fifa: { matches:[], fontSize:'normal', color:'#00d4ff', accent:'#003c78', name:'EA FC 26', icon:'⚽',
+    bgCSS:'linear-gradient(rgba(5,15,40,0.75),rgba(0,0,0,0.88))',
+    headerColor:'#0a1628', borderColor:'#00d4ff', vsColor:'rgba(0,212,255,0.3)', timeBg:'rgba(0,212,255,0.1)' },
+  rl:   { matches:[], fontSize:'normal', color:'#ffaa00', accent:'#4d1200', name:'Rocket League', icon:'🚗',
+    bgCSS:'linear-gradient(rgba(30,8,0,0.8),rgba(0,0,0,0.9))',
+    headerColor:'#2d0800', borderColor:'#ff6600', vsColor:'rgba(255,150,0,0.3)', timeBg:'rgba(255,120,0,0.1)' },
+  tekken:{ matches:[], fontSize:'normal', color:'#ff6b35', accent:'#3d0015', name:'Tekken', icon:'👊',
+    bgCSS:'linear-gradient(rgba(20,0,10,0.8),rgba(0,0,0,0.9))',
+    headerColor:'#150010', borderColor:'#cc2255', vsColor:'rgba(255,60,80,0.3)', timeBg:'rgba(255,50,80,0.1)' }
+};
 
-        // دالة لإنشاء صف مباراة جديد
-        function createMatchRow(matchData = { player1: "", player2: "", time: "", player1Present: false, player2Present: false }, matchNumber) {
-            const row = document.createElement('div');
-            row.className = 'match-row';
-            
-            // تحويل الوقت إلى تنسيق 12 ساعة للعرض
-            const time12h = convertTo12Hour(matchData.time || '19:00');
-            
-            row.innerHTML = `
-                <div class="match-number">${matchNumber}</div>
-                <button class="remove-match"><i class="fas fa-trash"></i></button>
-                <div style="display:flex; align-items:center; justify-content:center; gap:20px; margin:20px 0;">
-                    <div style="flex:1;">
-                        <div class="player-with-checkbox">
-                            <label class="attendance-label">
-                                <input type="checkbox" class="attendance-checkbox-input player1-present" ${matchData.player1Present ? 'checked' : ''}>
-                                <span class="custom-checkbox"></span>
-                            </label>
-                            <input type="text" class="player-input player1" placeholder="اسم اللاعب الأول" value="${matchData.player1 || ''}">
-                        </div>
-                    </div>
-                    <div class="vs-circle">VS</div>
-                    <div style="flex:1;">
-                        <div class="player-with-checkbox">
-                            <input type="text" class="player-input player2" placeholder="اسم اللاعب الثاني" value="${matchData.player2 || ''}">
-                            <label class="attendance-label">
-                                <input type="checkbox" class="attendance-checkbox-input player2-present" ${matchData.player2Present ? 'checked' : ''}>
-                                <span class="custom-checkbox"></span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="time-input-container">
-                    <span style="color:#94a3b8;">الوقت:</span>
-                    <input type="time" class="time-input" value="${time12h.time}" step="300">
-                    <button type="button" class="am-pm-btn ${time12h.period === 'PM' ? 'active' : ''}" data-period="PM">م</button>
-                    <button type="button" class="am-pm-btn ${time12h.period === 'AM' ? 'active' : ''}" data-period="AM">ص</button>
-                </div>
-            `;
-            
-            // إضافة أحداث لأزرار AM/PM
-            const amBtn = row.querySelector('[data-period="AM"]');
-            const pmBtn = row.querySelector('[data-period="PM"]');
-            
-            function updatePeriodButtons(activePeriod) {
-                amBtn.classList.toggle('active', activePeriod === 'AM');
-                pmBtn.classList.toggle('active', activePeriod === 'PM');
-            }
-            
-            amBtn.addEventListener('click', () => {
-                updatePeriodButtons('AM');
-            });
-            
-            pmBtn.addEventListener('click', () => {
-                updatePeriodButtons('PM');
-            });
-            
-            // إضافة حدث لحذف المباراة
-            const removeBtn = row.querySelector('.remove-match');
-            removeBtn.addEventListener('click', () => {
-                const index = Array.from(matchesContainer.children).indexOf(row);
-                if (index > -1) {
-                    matches.splice(index, 1);
-                    renderExistingMatches(); // إعادة ترتيب الأرقام
-                }
-            });
-            
-            return row;
-        }
+let currentGame = 'fifa';
 
-        // حفظ المباريات الحالية
-        function saveCurrentMatches() {
-            matches = [];
-            document.querySelectorAll('.match-row').forEach((row, index) => {
-                const player1 = row.querySelector('.player1')?.value.trim() || '';
-                const player2 = row.querySelector('.player2')?.value.trim() || '';
-                const timeInput = row.querySelector('.time-input')?.value || '';
-                const amPmBtn = row.querySelector('.am-pm-btn.active');
-                const period = amPmBtn ? amPmBtn.getAttribute('data-period') : 'PM';
-                const player1Present = row.querySelector('.player1-present')?.checked || false;
-                const player2Present = row.querySelector('.player2-present')?.checked || false;
-                
-                // تحويل الوقت إلى 24 ساعة للحفظ
-                const time24h = convertTo24Hour(timeInput, period);
-                
-                matches.push({ 
-                    player1, 
-                    player2, 
-                    time: time24h,
-                    number: index + 1,
-                    player1Present,
-                    player2Present
-                });
-            });
-        }
+function switchGame(game) {
+  currentGame = game;
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById('section-'+game).classList.add('active');
+  const tabs = { fifa:'active-fifa', rl:'active-rl', tekken:'active-tekken' };
+  document.querySelectorAll('.game-tab').forEach(t => t.className = 'game-tab');
+  document.getElementById('tab-'+game).classList.add('game-tab', tabs[game]);
+}
 
-        // إضافة مباراة جديدة مع الحفاظ على البيانات الحالية
-        function addNewMatch() {
-            // حفظ المباريات الحالية أولاً
-            saveCurrentMatches();
-            
-            const newMatch = { 
-                player1: "", 
-                player2: "", 
-                time: "19:00", // وقت افتراضي 7 مساءً
-                number: matches.length + 1,
-                player1Present: false,
-                player2Present: false
-            };
-            matches.push(newMatch);
-            renderExistingMatches(); // إعادة الرسم لتحديث الأرقام
-        }
+function setFontSize(game, size, el) {
+  gameData[game].fontSize = size;
+  const controls = document.getElementById(game+'-font-controls');
+  controls.querySelectorAll('.font-btn').forEach(b => {
+    b.classList.remove('active','fifa-font-active','rl-font-active','tekken-font-active');
+  });
+  el.classList.add('active', game+'-font-active');
+}
 
-        // عرض المباريات الموجودة مع ترقيم
-        function renderExistingMatches() {
-            matchesContainer.innerHTML = '';
-            matches.forEach((match, index) => {
-                const matchNumber = index + 1;
-                const row = createMatchRow(match, matchNumber);
-                matchesContainer.appendChild(row);
-            });
-        }
+function addMatch(game) {
+  const g = gameData[game];
+  const num = g.matches.length + 1;
+  g.matches.push({ player1:'', player2:'', time:'19:00', id: Date.now() });
+  renderMatches(game);
+}
 
-        // الحصول على أحجام الخطوط حسب الاختيار
-        function getFontSizes() {
-            const sizes = {
-                normal: {
-                    title: '2.4rem',
-                    subtitle: '1.2rem',
-                    playerName: '0.95rem',
-                    info: '1rem',
-                    tablePadding: '12px 8px',
-                    extraBottomMargin: '80px',
-                    tableHeader: '0.85rem',
-                    columnTitle: '1.1rem',
-                    tableWidth: '97%',
-                    columnGap: '12px'
-                },
-                medium: {
-                    title: '2.6rem',
-                    subtitle: '1.3rem',
-                    playerName: '1.05rem',
-                    info: '1.1rem',
-                    tablePadding: '14px 10px',
-                    extraBottomMargin: '90px',
-                    tableHeader: '0.9rem',
-                    columnTitle: '1.15rem',
-                    tableWidth: '98%',
-                    columnGap: '14px'
-                },
-                large: {
-                    title: '2.8rem',
-                    subtitle: '1.4rem',
-                    playerName: '1.15rem',
-                    info: '1.2rem',
-                    tablePadding: '16px 12px',
-                    extraBottomMargin: '100px',
-                    tableHeader: '0.95rem',
-                    columnTitle: '1.2rem',
-                    tableWidth: '99%',
-                    columnGap: '16px'
-                },
-                xlarge: {
-                    title: '3.0rem',
-                    subtitle: '1.5rem',
-                    playerName: '1.25rem',
-                    info: '1.3rem',
-                    tablePadding: '18px 14px',
-                    extraBottomMargin: '110px',
-                    tableHeader: '1.0rem',
-                    columnTitle: '1.25rem',
-                    tableWidth: '100%',
-                    columnGap: '18px'
-                }
-            };
-            return sizes[selectedFontSize] || sizes.normal;
-        }
+function deleteMatch(game, id) {
+  gameData[game].matches = gameData[game].matches.filter(m => m.id !== id);
+  renderMatches(game);
+}
 
-        // تقسيم المباريات إلى عمودين بالتساوي تقريباً
-        function splitMatchesIntoColumns() {
-            const middleIndex = Math.ceil(matches.length / 2);
-            const firstColumnMatches = matches.slice(0, middleIndex);
-            const secondColumnMatches = matches.slice(middleIndex);
-            
-            return { firstColumnMatches, secondColumnMatches };
-        }
+function saveMatchData(game) {
+  const container = document.getElementById(game+'-matches');
+  gameData[game].matches.forEach(m => {
+    const card = container.querySelector('[data-id="'+m.id+'"]');
+    if (!card) return;
+    m.player1 = card.querySelector('.p1').value;
+    m.player2 = card.querySelector('.p2').value;
+    m.time = card.querySelector('.tm').value;
+  });
+}
 
-        // إنشاء جدول لعمود واحد مع مربعات الاختيار البيضاء (مع إمكانية التحجيم)
-        function createTableForColumn(matchesArray, startNumber = 1, columnNumber = 1) {
-            const fontSizes = getFontSizes();
-            const scale = columnNumber === 1 ? table1Scale : table2Scale;
-            
-            // حساب أحجام الخطوط بناءً على مستوى التقليص
-            const scaledPlayerName = `calc(${fontSizes.playerName} * ${scale})`;
-            const scaledTableHeader = `calc(${fontSizes.tableHeader} * ${scale})`;
-            const scaledTablePadding = `calc(${fontSizes.tablePadding.split(' ')[0]} * ${scale}) calc(${fontSizes.tablePadding.split(' ')[1]} * ${scale})`;
-            
-            function formatTimeForDisplay(time24h) {
-                if (!time24h) return 'غير محدد';
-                
-                const [hours, minutes] = time24h.split(':').map(Number);
-                let period = 'ص';
-                let displayHours = hours;
-                
-                if (hours >= 12) {
-                    period = 'م';
-                    if (hours > 12) {
-                        displayHours = hours - 12;
-                    }
-                } else if (hours === 0) {
-                    displayHours = 12;
-                }
-                
-                if (minutes === 0) {
-                    return `${displayHours} ${period}`;
-                }
-                
-                return `${displayHours}:${minutes.toString().padStart(2, '0')} ${period}`;
-            }
-            
-            if (matchesArray.length === 0) return '';
-            
-            return `
-                <div style="width:100%; max-width:100%; overflow:hidden; border-radius:12px; transform:scale(${scale}); transform-origin:top center;">
-                    <table style="width:100%; border-collapse:collapse; background:rgba(0,0,0,0.4); table-layout:fixed;">
-                        <thead>
-                            <tr>
-                                <th style="background:rgba(30,58,138,0.6); padding:${scaledTablePadding}; text-align:center; border-bottom:2px solid rgba(59,130,246,.4); width:50px; font-size:${scaledTableHeader}; white-space:nowrap;">رقم</th>
-                                <th style="background:rgba(30,58,138,0.6); padding:${scaledTablePadding}; text-align:center; border-bottom:2px solid rgba(59,130,246,.4); width:35px; font-size:${scaledTableHeader};">حضر</th>
-                                <th style="background:rgba(30,58,138,0.6); padding:${scaledTablePadding}; text-align:center; border-bottom:2px solid rgba(59,130,246,.4); font-size:${scaledTableHeader}; overflow:hidden; text-overflow:ellipsis;">اللاعب الأول</th>
-                                <th style="background:rgba(30,58,138,0.6); padding:${scaledTablePadding}; text-align:center; border-bottom:2px solid rgba(59,130,246,.4); width:60px; font-size:${scaledTableHeader};">VS</th>
-                                <th style="background:rgba(30,58,138,0.6); padding:${scaledTablePadding}; text-align:center; border-bottom:2px solid rgba(59,130,246,.4); font-size:${scaledTableHeader}; overflow:hidden; text-overflow:ellipsis;">اللاعب الثاني</th>
-                                <th style="background:rgba(30,58,138,0.6); padding:${scaledTablePadding}; text-align:center; border-bottom:2px solid rgba(59,130,246,.4); width:35px; font-size:${scaledTableHeader};">حضر</th>
-                                <th style="background:rgba(30,58,138,0.6); padding:${scaledTablePadding}; text-align:center; border-bottom:2px solid rgba(59,130,246,.4); width:90px; font-size:${scaledTableHeader};">الوقت</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${matchesArray.map((m, index) => `
-                                <tr>
-                                    <td style="padding:calc(10px * ${scale}) calc(6px * ${scale}); background:rgba(0,0,0,0.35); text-align:center; font-size:${scaledPlayerName};">
-                                        <div style="background:linear-gradient(135deg,#3b82f6,#1d4ed8); color:white; font-weight:bold; border-radius:50%; width:calc(32px * ${scale}); height:calc(32px * ${scale}); display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:${scaledPlayerName};">
-                                            ${startNumber + index}
-                                        </div>
-                                    </td>
-                                    <td style="padding:calc(10px * ${scale}) calc(6px * ${scale}); background:rgba(0,0,0,0.35); text-align:center; font-size:${scaledPlayerName};">
-                                        <div style="width:calc(20px * ${scale}); height:calc(20px * ${scale}); border:1px solid #cbd5e1; border-radius:3px; margin:0 auto; background:white;"></div>
-                                    </td>
-                                    <td style="font-weight:700; padding:calc(10px * ${scale}) calc(8px * ${scale}); background:rgba(0,0,0,0.35); text-align:center; font-size:${scaledPlayerName}; overflow:hidden; text-overflow:ellipsis; max-width:calc(150px * ${scale});">
-                                        ${m.player1 || '—'}
-                                    </td>
-                                    <td style="padding:calc(10px * ${scale}) calc(6px * ${scale}); background:rgba(0,0,0,0.35); text-align:center; font-size:${scaledPlayerName};">
-                                        <span style="background:rgba(59,130,246,.3); padding:calc(4px * ${scale}) calc(12px * ${scale}); border-radius:999px; font-weight:bold; display:inline-block; font-size:${scaledPlayerName};">VS</span>
-                                    </td>
-                                    <td style="font-weight:700; padding:calc(10px * ${scale}) calc(8px * ${scale}); background:rgba(0,0,0,0.35); text-align:center; font-size:${scaledPlayerName}; overflow:hidden; text-overflow:ellipsis; max-width:calc(150px * ${scale});">
-                                        ${m.player2 || '—'}
-                                    </td>
-                                    <td style="padding:calc(10px * ${scale}) calc(6px * ${scale}); background:rgba(0,0,0,0.35); text-align:center; font-size:${scaledPlayerName};">
-                                        <div style="width:calc(20px * ${scale}); height:calc(20px * ${scale}); border:1px solid #cbd5e1; border-radius:3px; margin:0 auto; background:white;"></div>
-                                    </td>
-                                    <td style="padding:calc(10px * ${scale}) calc(6px * ${scale}); background:rgba(0,0,0,0.35); text-align:center; font-size:${scaledPlayerName};">
-                                        <span style="background:rgba(255,255,255,.08); padding:calc(5px * ${scale}) calc(10px * ${scale}); border-radius:6px; display:inline-block; font-size:${scaledPlayerName}; white-space:nowrap;">${formatTimeForDisplay(m.time)}</span>
-                                    </td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-                </div>
-            `;
-        }
+function renderMatches(game) {
+  const g = gameData[game];
+  const container = document.getElementById(game+'-matches');
+  if (g.matches.length === 0) {
+    const icons = {fifa:'⚽',rl:'🚗',tekken:'👊'};
+    container.innerHTML = `<div class="empty-state"><div class="empty-icon">${icons[game]}</div><p>لا توجد مباريات بعد</p><p style="font-size:12px;margin-top:6px;color:#6b7280;">اضغط "إضافة مباراة" للبدء</p></div>`;
+    updateStats(game);
+    return;
+  }
+  container.innerHTML = g.matches.map((m, i) => `
+    <div class="match-card ${game}-card" data-id="${m.id}">
+      <div class="match-num num-${game}">${i+1}</div>
+      <div class="match-players">
+        <input type="text" class="player-input-sm p1" placeholder="اللاعب الأول" value="${m.player1}" onchange="saveMatchData('${game}')" oninput="saveMatchData('${game}')">
+        <span class="vs-badge vs-${game}">VS</span>
+        <input type="text" class="player-input-sm p2" placeholder="اللاعب الثاني" value="${m.player2}" onchange="saveMatchData('${game}')" oninput="saveMatchData('${game}')">
+      </div>
+      <input type="time" class="time-sm tm" value="${m.time}" onchange="saveMatchData('${game}')">
+      <button class="del-btn" onclick="deleteMatch('${game}',${m.id})">×</button>
+    </div>
+  `).join('');
+  updateStats(game);
+}
 
-        // توليد المعاينة مع تقسيم إلى عمودين إذا تجاوزت 13 مباراة
-        function generatePreview() {
-            saveCurrentMatches();
-            const title = document.getElementById('tournament-title').value || "اسم البطولة غير محدد";
-            const dateVal = document.getElementById('tournament-date').value ? 
-                new Date(document.getElementById('tournament-date').value).toLocaleString('ar-SA', {dateStyle:'full', timeStyle:'short'}) : 
-                "التاريخ غير محدد";
-            
-            const fontSizes = getFontSizes();
-            const useTwoColumns = matches.length > 13;
-            
-            let columnsHtml = '';
-            
-            if (matches.length > 0) {
-                if (useTwoColumns) {
-                    const { firstColumnMatches, secondColumnMatches } = splitMatchesIntoColumns();
-                    
-                    columnsHtml = `
-                        <div style="display:flex; gap:${fontSizes.columnGap}; width:${fontSizes.tableWidth}; margin:0 auto; max-width:100%; overflow:hidden;">
-                            <div style="flex:1; min-width:0;">
-                                <div style="text-align:center; font-size:${fontSizes.columnTitle}; margin-bottom:15px; color:#e2e8f0; padding-bottom:8px; border-bottom:2px solid rgba(59,130,246,.3); white-space:nowrap; transform:scale(${table1Scale}); transform-origin:top center;">
-                                    المباريات 1-${firstColumnMatches.length}
-                                </div>
-                                ${createTableForColumn(firstColumnMatches, 1, 1)}
-                            </div>
-                            <div style="flex:1; min-width:0;">
-                                <div style="text-align:center; font-size:${fontSizes.columnTitle}; margin-bottom:15px; color:#e2e8f0; padding-bottom:8px; border-bottom:2px solid rgba(59,130,246,.3); white-space:nowrap; transform:scale(${table2Scale}); transform-origin:top center;">
-                                    المباريات ${firstColumnMatches.length + 1}-${matches.length}
-                                </div>
-                                ${createTableForColumn(secondColumnMatches, firstColumnMatches.length + 1, 2)}
-                            </div>
-                        </div>
-                    `;
-                } else {
-                    columnsHtml = `
-                        <div style="width:${fontSizes.tableWidth}; margin:0 auto; max-width:100%;">
-                            ${createTableForColumn(matches, 1, 1)}
-                        </div>
-                    `;
-                }
-            }
+function updateStats(game) {
+  const g = gameData[game];
+  const count = g.matches.length;
+  document.getElementById(game+'-total').textContent = count;
+  const players = new Set();
+  g.matches.forEach(m => { if(m.player1) players.add(m.player1); if(m.player2) players.add(m.player2); });
+  document.getElementById(game+'-players-count').textContent = players.size;
+  document.getElementById(game+'-count-badge').textContent = count + ' مباراة';
+  document.getElementById('badge-'+game).textContent = count + ' مباراة';
+}
 
-            // إضافة مساحة في الأسفل لضمان عدم قص أي شيء
-            const bottomSpacing = `
-                <div style="height:${fontSizes.extraBottomMargin};"></div>
-            `;
+function formatTime(t) {
+  if (!t) return 'غير محدد';
+  const [h,m] = t.split(':').map(Number);
+  const p = h >= 12 ? 'م' : 'ص';
+  const h12 = h > 12 ? h-12 : h === 0 ? 12 : h;
+  return m === 0 ? `${h12} ${p}` : `${h12}:${String(m).padStart(2,'0')} ${p}`;
+}
 
-            let html = `
-                <div style="
-                    background: linear-gradient(rgba(10,25,50,0.60), rgba(0,0,0,0.80)), 
-                    url('fc26.png') center/cover no-repeat fixed;
-                    padding: 25px 15px 15px;
-                    border-radius: 16px;
-                    color: white;
-                    text-shadow: 0 3px 12px rgba(0,0,0,1);
-                    min-height: ${matches.length > 20 ? '1200px' : '1000px'};
-                    position: relative;
-                    width: 100%;
-                    max-width: 100%;
-                    overflow: hidden;
-                ">
-                    <h2 style="font-size:${fontSizes.title}; margin-bottom:12px; color:#e0f2fe; text-align:center; font-weight:bold; line-height:1.3; padding:0 10px;">${title}</h2>
-                    <p style="font-size:${fontSizes.subtitle}; opacity:1; margin-bottom:25px; text-align:center; padding:0 10px;">${dateVal}</p>
+function getFontSize(key) {
+  const map = { normal:{title:'2.2rem',sub:'1.1rem',cell:'0.9rem',pad:'12px 10px'},
+    medium:{title:'2.4rem',sub:'1.2rem',cell:'1rem',pad:'14px 12px'},
+    large:{title:'2.6rem',sub:'1.3rem',cell:'1.1rem',pad:'16px 14px'},
+    xlarge:{title:'2.8rem',sub:'1.4rem',cell:'1.2rem',pad:'18px 16px'} };
+  return map[key] || map.normal;
+}
 
-                    ${matches.length > 0 ? `
-                        <div style="padding:0 5px;">
-                            ${columnsHtml}
-                            
-                            <div style="margin-top:25px; text-align:center; color:#cbd5e1; font-size:${fontSizes.info}; padding:12px; background:rgba(0,0,0,0.3); border-radius:8px; width:80%; margin-left:auto; margin-right:auto; max-width:600px;">
-                                <i class="fas fa-info-circle"></i> إجمالي عدد المباريات: <strong>${matches.length}</strong> مباراة
-                            </div>
-                        </div>
-                    ` : `
-                        <div class="empty-message">
-                            <i class="fas fa-futbol"></i>
-                            <h3>لا توجد مباريات مضافة بعد</h3>
-                        </div>
-                    `}
-                    
-                    ${bottomSpacing}
-                </div>
-            `;
+function buildPreviewHTML(game) {
+  saveMatchData(game);
+  const g = gameData[game];
+  const title = document.getElementById(game+'-title').value || g.name + ' - بطولة';
+  const dateVal = document.getElementById(game+'-date').value ? new Date(document.getElementById(game+'-date').value).toLocaleString('ar-SA',{dateStyle:'full',timeStyle:'short'}) : 'التاريخ غير محدد';
+  const venue = document.getElementById(game+'-venue').value || '';
+  const fs = getFontSize(g.fontSize);
+  const midPoint = Math.ceil(g.matches.length / 2);
+  const col1 = g.matches.slice(0, midPoint);
+  const col2 = g.matches.slice(midPoint);
+  const useTwoCols = g.matches.length > 10;
 
-            previewContainer.innerHTML = html;
-            updateScaleDisplay(); // تحديث عرض مستويات التقليص
-        }
+  const tableStyle = `width:100%;border-collapse:collapse;background:rgba(0,0,0,0.35);table-layout:fixed;`;
+  const thStyle = `background:rgba(0,0,0,0.4);padding:${fs.pad};text-align:center;border-bottom:2px solid ${g.borderColor};font-size:calc(${fs.cell} * 0.85);color:${g.color};`;
+  const tdStyle = `padding:calc(${fs.cell} * 0.9) 8px;text-align:center;border-bottom:1px solid rgba(255,255,255,0.07);font-size:${fs.cell};color:white;`;
 
-        // تحميل PDF
-        async function downloadPDF() {
-            saveCurrentMatches();
-            if (matches.length === 0) {
-                alert("أضف مباراة واحدة على الأقل قبل التحميل");
-                return;
-            }
-            
-            generatePreview();
-            await new Promise(r => setTimeout(r, 1500)); // زيادة الوقت للتأكد من تحميل الصورة
-            
-            const el = previewContainer.firstElementChild;
-            
-            // زيادة حجم الصورة التي سيتم تحويلها لضمان جودة عالية
-            const scaleFactor = matches.length > 20 ? 2.8 : 2.5;
-            
-            html2canvas(el, {
-                scale: scaleFactor,
-                useCORS: true,
-                allowTaint: true,
-                backgroundColor: null,
-                logging: false,
-                width: el.offsetWidth,
-                height: el.offsetHeight,
-                onclone: function(clonedDoc) {
-                    // التأكد من أن الخلفية محملة في المستنسخ
-                    const clonedEl = clonedDoc.querySelector('#preview-container > div');
-                    if (clonedEl) {
-                        clonedEl.style.backgroundImage = `linear-gradient(rgba(10,25,50,0.60), rgba(0,0,0,0.80)), url('fc26.png')`;
-                        clonedEl.style.width = '100%';
-                        clonedEl.style.maxWidth = '100%';
-                    }
-                }
-            }).then(canvas => {
-                const { jsPDF } = window.jspdf;
-                const pdf = new jsPDF('p', 'mm', 'a4');
-                
-                // حساب الأبعاد مع الحفاظ على التناسب
-                const pdfWidth = 210; // عرض A4 بالمليمتر
-                const pdfHeight = 297; // ارتفاع A4 بالمليمتر
-                
-                const imgWidth = pdfWidth;
-                const imgHeight = (canvas.height * pdfWidth) / canvas.width;
-                
-                // إضافة الصورة
-                pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, imgWidth, imgHeight);
-                pdf.save(`جدول-FCC26-EAFC26-${Date.now()}.pdf`);
-            }).catch(err => {
-                console.error(err);
-                alert("خطأ في التقاط الصورة: " + err.message);
-            });
-        }
+  const makeTable = (arr, startNum) => `
+    <table style="${tableStyle}">
+      <thead><tr>
+        <th style="${thStyle}width:40px;">#</th>
+        <th style="${thStyle}">اللاعب الأول</th>
+        <th style="${thStyle}width:55px;">VS</th>
+        <th style="${thStyle}">اللاعب الثاني</th>
+        <th style="${thStyle}width:80px;">الوقت</th>
+      </tr></thead>
+      <tbody>${arr.map((m,i) => `
+        <tr>
+          <td style="${tdStyle}"><div style="background:linear-gradient(135deg,${g.accent},${g.borderColor});border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;margin:0 auto;font-weight:600;font-size:13px;">${startNum+i}</div></td>
+          <td style="${tdStyle}font-weight:600;">${m.player1||'—'}</td>
+          <td style="${tdStyle}"><span style="background:${g.vsColor};padding:3px 10px;border-radius:20px;font-weight:700;font-size:12px;color:${g.color};">VS</span></td>
+          <td style="${tdStyle}font-weight:600;">${m.player2||'—'}</td>
+          <td style="${tdStyle}"><span style="background:${g.timeBg};padding:4px 8px;border-radius:6px;font-size:12px;border:1px solid ${g.borderColor}33;">${formatTime(m.time)}</span></td>
+        </tr>`).join('')}
+      </tbody>
+    </table>`;
 
-        // تهيئة التطبيق
-        document.addEventListener('DOMContentLoaded', () => {
-            // ربط أحداث اختيار حجم الخط
-            document.querySelectorAll('.font-size-option').forEach(option => {
-                option.addEventListener('click', function() {
-                    document.querySelectorAll('.font-size-option').forEach(opt => {
-                        opt.classList.remove('selected');
-                    });
-                    this.classList.add('selected');
-                    selectedFontSize = this.getAttribute('data-size');
-                    generatePreview();
-                });
-            });
-            
-            // ربط الأحداث الرئيسية
-            addMatchBtn.addEventListener('click', addNewMatch);
-            previewBtn.addEventListener('click', generatePreview);
-            downloadBtn.addEventListener('click', downloadPDF);
-            
-            // ربط أحداث التحكم في الجداول
-            document.getElementById('shrink-table1-btn').addEventListener('click', () => {
-                if (table1Scale > minScale) {
-                    table1Scale -= table1ScaleStep;
-                    generatePreview();
-                }
-            });
-            
-            document.getElementById('expand-table1-btn').addEventListener('click', () => {
-                if (table1Scale < maxScale) {
-                    table1Scale += table1ScaleStep;
-                    generatePreview();
-                }
-            });
-            
-            document.getElementById('shrink-table2-btn').addEventListener('click', () => {
-                if (table2Scale > minScale) {
-                    table2Scale -= table2ScaleStep;
-                    generatePreview();
-                }
-            });
-            
-            document.getElementById('expand-table2-btn').addEventListener('click', () => {
-                if (table2Scale < maxScale) {
-                    table2Scale += table2ScaleStep;
-                    generatePreview();
-                }
-            });
-            
-            document.getElementById('reset-tables-btn').addEventListener('click', () => {
-                table1Scale = 1.0;
-                table2Scale = 1.0;
-                generatePreview();
-            });
-            
-            // عرض المباريات الابتدائية
-            renderExistingMatches();
-            
-            // توليد معاينة أولية
-            generatePreview();
-            
-            // تعيين التاريخ الحالي كقيمة افتراضية
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const day = String(now.getDate()).padStart(2, '0');
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            document.getElementById('tournament-date').value = `${year}-${month}-${day}T${hours}:${minutes}`;
-            
-            // إضافة حدث لحفظ البيانات عند التعديل
-            matchesContainer.addEventListener('input', () => {
-                saveCurrentMatches();
-            });
-            
-            // إضافة حدث لحفظ حالة checkboxes
-            matchesContainer.addEventListener('change', (e) => {
-                if (e.target.classList.contains('attendance-checkbox-input')) {
-                    saveCurrentMatches();
-                }
-            });
-        });
-    </script>
-</body>
-</html>
+  const colsHTML = useTwoCols ? `
+    <div style="display:flex;gap:12px;">
+      <div style="flex:1;min-width:0;"><div style="text-align:center;font-size:0.9rem;margin-bottom:10px;color:${g.color};padding-bottom:6px;border-bottom:1px solid ${g.borderColor}55;">المباريات 1–${col1.length}</div>${makeTable(col1,1)}</div>
+      <div style="flex:1;min-width:0;"><div style="text-align:center;font-size:0.9rem;margin-bottom:10px;color:${g.color};padding-bottom:6px;border-bottom:1px solid ${g.borderColor}55;">المباريات ${col1.length+1}–${g.matches.length}</div>${makeTable(col2,col1.length+1)}</div>
+    </div>` :
+    `<div>${makeTable(g.matches,1)}</div>`;
+
+  return `
+    <div style="${g.bgCSS};padding:28px 20px;border-radius:14px;color:white;min-height:600px;border:2px solid ${g.borderColor}66;">
+      <div style="text-align:center;margin-bottom:22px;">
+        <div style="font-size:2.5rem;margin-bottom:8px;">${g.icon}</div>
+        <h2 style="font-size:${fs.title};font-weight:700;color:${g.color};margin-bottom:8px;text-shadow:0 2px 10px rgba(0,0,0,0.8);">${title}</h2>
+        <p style="font-size:${fs.sub};opacity:0.85;margin-bottom:4px;">${dateVal}</p>
+        ${venue ? `<p style="font-size:0.9rem;opacity:0.65;margin-top:4px;">📍 ${venue}</p>` : ''}
+      </div>
+      ${g.matches.length > 0 ? `
+        ${colsHTML}
+        <div style="margin-top:20px;text-align:center;padding:10px;background:rgba(0,0,0,0.3);border-radius:8px;font-size:0.9rem;color:#94a3b8;">
+          إجمالي المباريات: <strong style="color:${g.color};">${g.matches.length}</strong>
+        </div>` : `
+        <div style="text-align:center;padding:60px;color:#4b5563;"><div style="font-size:3rem;opacity:0.3;">${g.icon}</div><p style="margin-top:12px;">لا توجد مباريات</p></div>`}
+      <div style="height:30px;"></div>
+    </div>`;
+}
+
+function showPreview(game) {
+  const html = buildPreviewHTML(game);
+  document.getElementById('preview-modal').innerHTML = `
+    <div style="background:#0f172a;padding:20px;border-radius:16px;border:1px solid rgba(255,255,255,0.1);">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+        <span style="font-weight:500;color:#e2e8f0;">معاينة الجدول</span>
+        <button onclick="closePreview()" style="background:rgba(239,68,68,0.2);border:none;color:#f87171;padding:6px 14px;border-radius:6px;cursor:pointer;font-size:13px;">✕ إغلاق</button>
+      </div>
+      ${html}
+    </div>`;
+  document.getElementById('preview-overlay').style.display = 'flex';
+}
+
+function closePreview(e) {
+  if (!e || e.target === document.getElementById('preview-overlay')) {
+    document.getElementById('preview-overlay').style.display = 'none';
+  }
+}
+
+async function downloadPDF(game) {
+  saveMatchData(game);
+  if (gameData[game].matches.length === 0) { alert('أضف مباراة واحدة على الأقل'); return; }
+  const html = buildPreviewHTML(game);
+  const wrapper = document.createElement('div');
+  wrapper.style.cssText = 'position:fixed;top:-9999px;left:-9999px;width:800px;background:#0f172a;padding:20px;';
+  wrapper.innerHTML = html;
+  document.body.appendChild(wrapper);
+  await new Promise(r => setTimeout(r,800));
+  try {
+    const canvas = await html2canvas(wrapper.firstElementChild, { scale:2.5, useCORS:true, backgroundColor:'#0f172a', logging:false });
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF('p','mm','a4');
+    const imgW = 210;
+    const imgH = (canvas.height * imgW) / canvas.width;
+    pdf.addImage(canvas.toDataURL('image/png'),'PNG',0,0,imgW,imgH);
+    pdf.save(`جدول-${gameData[game].name}-${Date.now()}.pdf`);
+  } catch(e) { alert('خطأ في التحميل: '+e.message); }
+  document.body.removeChild(wrapper);
+}
+
+// Init dates
+['fifa','rl','tekken'].forEach(g => {
+  const now = new Date();
+  const pad = n => String(n).padStart(2,'0');
+  const dt = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
+  document.getElementById(g+'-date').value = dt;
+});
+</script>
