@@ -13,8 +13,7 @@ body{background:#0f172a;color:#e2e8f0;min-height:100vh}
 .game-tab.active-fifa{background:rgba(0,212,255,0.15);border-color:rgba(0,212,255,0.4);color:#00d4ff}
 .game-tab.active-rl{background:rgba(255,69,0,0.15);border-color:rgba(255,170,0,0.4);color:#ffaa00}
 .game-tab.active-tekken{background:rgba(139,0,0,0.25);border-color:rgba(255,107,53,0.4);color:#ff6b35}
-.section{display:none}
-.section.active{display:block}
+.section{display:none}.section.active{display:block}
 .fifa-section{background:linear-gradient(180deg,#0a1628 0%,#0d1f3d 100%)}
 .rl-section{background:linear-gradient(180deg,#1a0800 0%,#0d0500 100%)}
 .tekken-section{background:linear-gradient(180deg,#0a0010 0%,#150020 100%)}
@@ -52,7 +51,6 @@ body{background:#0f172a;color:#e2e8f0;min-height:100vh}
 .btn-rl{background:#ff6600;color:#fff}
 .btn-tekken{background:#cc2255;color:#fff}
 .btn-secondary{background:rgba(255,255,255,0.08);color:#e2e8f0;border:1px solid rgba(255,255,255,0.12)}
-.btn-secondary:hover{background:rgba(255,255,255,0.13)}
 .matches-panel{padding:16px;overflow-y:auto}
 .matches-title{font-size:13px;font-weight:500;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
 .match-count{font-size:11px;padding:3px 10px;border-radius:10px}
@@ -77,8 +75,6 @@ body{background:#0f172a;color:#e2e8f0;min-height:100vh}
 .del-btn{width:24px;height:24px;border-radius:5px;background:rgba(239,68,68,0.15);border:none;color:#f87171;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .empty-state{text-align:center;padding:50px 20px;color:#4b5563}
 .empty-icon{font-size:40px;margin-bottom:10px;opacity:0.4}
-.preview-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px}
-.preview-modal{width:100%;max-width:860px;max-height:90vh;overflow-y:auto;border-radius:14px}
 .font-controls{display:flex;gap:5px;margin-top:8px}
 .font-btn{flex:1;padding:5px;border-radius:5px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.05);color:#94a3b8;cursor:pointer;font-size:11px;text-align:center}
 .font-btn.active{color:white}
@@ -122,7 +118,7 @@ body{background:#0f172a;color:#e2e8f0;min-height:100vh}
   </button>
 </div>
 
-<!-- FIFA Section -->
+<!-- FIFA -->
 <div class="section fifa-section active" id="section-fifa">
   <div class="section-hero fifa-hero">
     <div class="hero-grid">
@@ -140,30 +136,19 @@ body{background:#0f172a;color:#e2e8f0;min-height:100vh}
   <div class="section-content">
     <div class="sidebar fifa-sidebar">
       <div class="sidebar-title"><span class="dot dot-fifa"></span> إعدادات البطولة</div>
-      <div class="form-group">
-        <label class="form-label">اسم البطولة</label>
-        <input type="text" class="form-input fifa-input" id="fifa-title" placeholder="بطولة الربيع 2026">
-      </div>
-      <div class="form-group">
-        <label class="form-label">التاريخ والوقت</label>
-        <input type="datetime-local" class="form-input fifa-input" id="fifa-date">
-      </div>
-      <div class="form-group">
-        <label class="form-label">المكان</label>
-        <input type="text" class="form-input fifa-input" id="fifa-venue" placeholder="الرياض - قاعة الألعاب">
-      </div>
+      <div class="form-group"><label class="form-label">اسم البطولة</label><input type="text" class="form-input fifa-input" id="fifa-title" placeholder="بطولة الربيع 2026"></div>
+      <div class="form-group"><label class="form-label">التاريخ والوقت</label><input type="datetime-local" class="form-input fifa-input" id="fifa-date"></div>
+      <div class="form-group"><label class="form-label">المكان</label><input type="text" class="form-input fifa-input" id="fifa-venue" placeholder="الرياض - قاعة الألعاب"></div>
       <div class="form-group">
         <label class="form-label">خلفية PDF</label>
         <div class="bg-selector" id="fifa-bg-selector">
           <div class="bg-option selected-fifa" data-game="fifa" data-idx="0" onclick="selectBg('fifa',0,this)">
             <img src="https://assets.kooora.com/images/v3/blt990cd7365e033ff6/2.jpg?quality=60&auto=webp&format=pjpg&width=1400" alt="bg1">
-            <div class="bg-label">ملعب ليلي</div>
-            <div class="check">✓</div>
+            <div class="bg-label">ملعب ليلي</div><div class="check">✓</div>
           </div>
           <div class="bg-option" data-game="fifa" data-idx="1" onclick="selectBg('fifa',1,this)">
             <img src="https://www.topgearmiddleeast.com/cloud/2025/10/03/Artboard-15-1024x576.jpg" alt="bg2">
-            <div class="bg-label">أرضية خضراء</div>
-            <div class="check">✓</div>
+            <div class="bg-label">أرضية خضراء</div><div class="check">✓</div>
           </div>
         </div>
       </div>
@@ -178,21 +163,16 @@ body{background:#0f172a;color:#e2e8f0;min-height:100vh}
       </div>
       <button class="btn btn-fifa" onclick="addMatch('fifa')">+ إضافة مباراة</button>
       <button class="btn btn-secondary" onclick="showPreview('fifa')">👁 معاينة الجدول</button>
-      <button class="btn btn-secondary" onclick="downloadPDF('fifa')">⬇ تحميل PDF</button>
+      <button class="btn btn-secondary" id="pdf-btn-fifa" onclick="downloadPDF('fifa')">⬇ تحميل PDF</button>
     </div>
     <div class="matches-panel">
-      <div class="matches-title">
-        <span>قائمة المباريات</span>
-        <span class="match-count fifa-count" id="fifa-count-badge">0 مباراة</span>
-      </div>
-      <div id="fifa-matches">
-        <div class="empty-state"><div class="empty-icon">⚽</div><p>لا توجد مباريات بعد</p><p style="font-size:11px;margin-top:5px;color:#6b7280;">اضغط "إضافة مباراة" للبدء</p></div>
-      </div>
+      <div class="matches-title"><span>قائمة المباريات</span><span class="match-count fifa-count" id="fifa-count-badge">0 مباراة</span></div>
+      <div id="fifa-matches"><div class="empty-state"><div class="empty-icon">⚽</div><p>لا توجد مباريات بعد</p><p style="font-size:11px;margin-top:5px;color:#6b7280;">اضغط "إضافة مباراة" للبدء</p></div></div>
     </div>
   </div>
 </div>
 
-<!-- Rocket League Section -->
+<!-- Rocket League -->
 <div class="section rl-section" id="section-rl">
   <div class="section-hero rl-hero">
     <div class="hero-grid">
@@ -210,59 +190,43 @@ body{background:#0f172a;color:#e2e8f0;min-height:100vh}
   <div class="section-content">
     <div class="sidebar rl-sidebar">
       <div class="sidebar-title"><span class="dot dot-rl"></span> إعدادات البطولة</div>
-      <div class="form-group">
-        <label class="form-label">اسم البطولة</label>
-        <input type="text" class="form-input rl-input" id="rl-title" placeholder="بطولة RL الخليج">
-      </div>
-      <div class="form-group">
-        <label class="form-label">التاريخ والوقت</label>
-        <input type="datetime-local" class="form-input rl-input" id="rl-date">
-      </div>
-      <div class="form-group">
-        <label class="form-label">المكان</label>
-        <input type="text" class="form-input rl-input" id="rl-venue" placeholder="جدة - مركز الترفيه">
-      </div>
+      <div class="form-group"><label class="form-label">اسم البطولة</label><input type="text" class="form-input rl-input" id="rl-title" placeholder="بطولة RL الخليج"></div>
+      <div class="form-group"><label class="form-label">التاريخ والوقت</label><input type="datetime-local" class="form-input rl-input" id="rl-date"></div>
+      <div class="form-group"><label class="form-label">المكان</label><input type="text" class="form-input rl-input" id="rl-venue" placeholder="جدة - مركز الترفيه"></div>
       <div class="form-group">
         <label class="form-label">خلفية PDF</label>
         <div class="bg-selector" id="rl-bg-selector">
           <div class="bg-option selected-rl" data-game="rl" data-idx="0" onclick="selectBg('rl',0,this)">
             <img src="https://cdn.salla.sa/ldYYj/hmyhRSGLylgwczJ2boqDLfQjDopAdwOPppLJqTkD.jpg" alt="bg1">
-            <div class="bg-label">سيارات مضيئة</div>
-            <div class="check">✓</div>
+            <div class="bg-label">سيارات مضيئة</div><div class="check">✓</div>
           </div>
           <div class="bg-option" data-game="rl" data-idx="1" onclick="selectBg('rl',1,this)">
             <img src="https://kuwaitigames.com/wp-content/uploads/2023/12/%D8%B1%D9%88%D9%83%D8%AA-%D9%84%D9%8A%D9%82-Rocket-League.png" alt="bg2">
-            <div class="bg-label">ملعب مستقبلي</div>
-            <div class="check">✓</div>
+            <div class="bg-label">ملعب مستقبلي</div><div class="check">✓</div>
           </div>
         </div>
       </div>
       <div class="form-group">
         <label class="form-label">حجم الخط</label>
         <div class="font-controls" id="rl-font-controls">
-          <div class="font-btn active rl-font-active" data-size="normal" onclick="setFontSize('rl','normal',this)">عادي</div>
-          <div class="font-btn" data-size="medium" onclick="setFontSize('rl','medium',this)">متوسط</div>
-          <div class="font-btn" data-size="large" onclick="setFontSize('rl','large',this)">كبير</div>
-          <div class="font-btn" data-size="xlarge" onclick="setFontSize('rl','xlarge',this)">جداً</div>
+          <div class="font-btn active rl-font-active" onclick="setFontSize('rl','normal',this)">عادي</div>
+          <div class="font-btn" onclick="setFontSize('rl','medium',this)">متوسط</div>
+          <div class="font-btn" onclick="setFontSize('rl','large',this)">كبير</div>
+          <div class="font-btn" onclick="setFontSize('rl','xlarge',this)">جداً</div>
         </div>
       </div>
       <button class="btn btn-rl" onclick="addMatch('rl')">+ إضافة مباراة</button>
       <button class="btn btn-secondary" onclick="showPreview('rl')">👁 معاينة الجدول</button>
-      <button class="btn btn-secondary" onclick="downloadPDF('rl')">⬇ تحميل PDF</button>
+      <button class="btn btn-secondary" id="pdf-btn-rl" onclick="downloadPDF('rl')">⬇ تحميل PDF</button>
     </div>
     <div class="matches-panel">
-      <div class="matches-title">
-        <span>قائمة المباريات</span>
-        <span class="match-count rl-count" id="rl-count-badge">0 مباراة</span>
-      </div>
-      <div id="rl-matches">
-        <div class="empty-state"><div class="empty-icon">🚗</div><p>لا توجد مباريات بعد</p><p style="font-size:11px;margin-top:5px;color:#6b7280;">اضغط "إضافة مباراة" للبدء</p></div>
-      </div>
+      <div class="matches-title"><span>قائمة المباريات</span><span class="match-count rl-count" id="rl-count-badge">0 مباراة</span></div>
+      <div id="rl-matches"><div class="empty-state"><div class="empty-icon">🚗</div><p>لا توجد مباريات بعد</p></div></div>
     </div>
   </div>
 </div>
 
-<!-- Tekken Section -->
+<!-- Tekken -->
 <div class="section tekken-section" id="section-tekken">
   <div class="section-hero tekken-hero">
     <div class="hero-grid">
@@ -280,54 +244,38 @@ body{background:#0f172a;color:#e2e8f0;min-height:100vh}
   <div class="section-content">
     <div class="sidebar tekken-sidebar">
       <div class="sidebar-title"><span class="dot dot-tekken"></span> إعدادات البطولة</div>
-      <div class="form-group">
-        <label class="form-label">اسم البطولة</label>
-        <input type="text" class="form-input tekken-input" id="tekken-title" placeholder="بطولة الفحول - Tekken">
-      </div>
-      <div class="form-group">
-        <label class="form-label">التاريخ والوقت</label>
-        <input type="datetime-local" class="form-input tekken-input" id="tekken-date">
-      </div>
-      <div class="form-group">
-        <label class="form-label">المكان</label>
-        <input type="text" class="form-input tekken-input" id="tekken-venue" placeholder="الدمام - كافيه الألعاب">
-      </div>
+      <div class="form-group"><label class="form-label">اسم البطولة</label><input type="text" class="form-input tekken-input" id="tekken-title" placeholder="بطولة الفحول - Tekken"></div>
+      <div class="form-group"><label class="form-label">التاريخ والوقت</label><input type="datetime-local" class="form-input tekken-input" id="tekken-date"></div>
+      <div class="form-group"><label class="form-label">المكان</label><input type="text" class="form-input tekken-input" id="tekken-venue" placeholder="الدمام - كافيه الألعاب"></div>
       <div class="form-group">
         <label class="form-label">خلفية PDF</label>
         <div class="bg-selector" id="tekken-bg-selector">
           <div class="bg-option selected-tekken" data-game="tekken" data-idx="0" onclick="selectBg('tekken',0,this)">
             <img src="https://upload.wikimedia.org/wikipedia/ar/9/9a/%D8%BA%D9%84%D8%A7%D9%81_%D9%81%D9%86%D9%8A_%D9%84%D9%84%D8%B9%D8%A8%D8%A9_%D8%AA%D9%8A%D9%83%D9%86_8.jpg" alt="bg1">
-            <div class="bg-label">قتال دراماتيكي</div>
-            <div class="check">✓</div>
+            <div class="bg-label">قتال دراماتيكي</div><div class="check">✓</div>
           </div>
           <div class="bg-option" data-game="tekken" data-idx="1" onclick="selectBg('tekken',1,this)">
             <img src="https://media.filgoal.com/news/verylarge/335984_0.jpg" alt="bg2">
-            <div class="bg-label">ألعاب مضيئة</div>
-            <div class="check">✓</div>
+            <div class="bg-label">ألعاب مضيئة</div><div class="check">✓</div>
           </div>
         </div>
       </div>
       <div class="form-group">
         <label class="form-label">حجم الخط</label>
         <div class="font-controls" id="tekken-font-controls">
-          <div class="font-btn active tekken-font-active" data-size="normal" onclick="setFontSize('tekken','normal',this)">عادي</div>
-          <div class="font-btn" data-size="medium" onclick="setFontSize('tekken','medium',this)">متوسط</div>
-          <div class="font-btn" data-size="large" onclick="setFontSize('tekken','large',this)">كبير</div>
-          <div class="font-btn" data-size="xlarge" onclick="setFontSize('tekken','xlarge',this)">جداً</div>
+          <div class="font-btn active tekken-font-active" onclick="setFontSize('tekken','normal',this)">عادي</div>
+          <div class="font-btn" onclick="setFontSize('tekken','medium',this)">متوسط</div>
+          <div class="font-btn" onclick="setFontSize('tekken','large',this)">كبير</div>
+          <div class="font-btn" onclick="setFontSize('tekken','xlarge',this)">جداً</div>
         </div>
       </div>
       <button class="btn btn-tekken" onclick="addMatch('tekken')">+ إضافة مباراة</button>
       <button class="btn btn-secondary" onclick="showPreview('tekken')">👁 معاينة الجدول</button>
-      <button class="btn btn-secondary" onclick="downloadPDF('tekken')">⬇ تحميل PDF</button>
+      <button class="btn btn-secondary" id="pdf-btn-tekken" onclick="downloadPDF('tekken')">⬇ تحميل PDF</button>
     </div>
     <div class="matches-panel">
-      <div class="matches-title">
-        <span>قائمة المباريات</span>
-        <span class="match-count tekken-count" id="tekken-count-badge">0 مباراة</span>
-      </div>
-      <div id="tekken-matches">
-        <div class="empty-state"><div class="empty-icon">👊</div><p>لا توجد مباريات بعد</p><p style="font-size:11px;margin-top:5px;color:#6b7280;">اضغط "إضافة مباراة" للبدء</p></div>
-      </div>
+      <div class="matches-title"><span>قائمة المباريات</span><span class="match-count tekken-count" id="tekken-count-badge">0 مباراة</span></div>
+      <div id="tekken-matches"><div class="empty-state"><div class="empty-icon">👊</div><p>لا توجد مباريات بعد</p></div></div>
     </div>
   </div>
 </div>
@@ -339,37 +287,39 @@ body{background:#0f172a;color:#e2e8f0;min-height:100vh}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
-const BG_URLS = {
-  fifa: [
-    'https://assets.kooora.com/images/v3/blt990cd7365e033ff6/2.jpg?quality=60&auto=webp&format=pjpg&width=1400',
-    'https://www.topgearmiddleeast.com/cloud/2025/10/03/Artboard-15-1024x576.jpg'
-  ],
-  rl: [
-    'https://cdn.salla.sa/ldYYj/hmyhRSGLylgwczJ2boqDLfQjDopAdwOPppLJqTkD.jpg',
-    'https://kuwaitigames.com/wp-content/uploads/2023/12/%D8%B1%D9%88%D9%83%D8%AA-%D9%84%D9%8A%D9%82-Rocket-League.png'
-  ],
-  tekken: [
-    'https://upload.wikimedia.org/wikipedia/ar/9/9a/%D8%BA%D9%84%D8%A7%D9%81_%D9%81%D9%86%D9%8A_%D9%84%D9%84%D8%B9%D8%A8%D8%A9_%D8%AA%D9%8A%D9%83%D9%86_8.jpg',
-    'https://media.filgoal.com/news/verylarge/335984_0.jpg'
-  ]
+const BG_URLS={
+  fifa:['https://assets.kooora.com/images/v3/blt990cd7365e033ff6/2.jpg?quality=60&auto=webp&format=pjpg&width=1400','https://www.topgearmiddleeast.com/cloud/2025/10/03/Artboard-15-1024x576.jpg'],
+  rl:['https://cdn.salla.sa/ldYYj/hmyhRSGLylgwczJ2boqDLfQjDopAdwOPppLJqTkD.jpg','https://kuwaitigames.com/wp-content/uploads/2023/12/%D8%B1%D9%88%D9%83%D8%AA-%D9%84%D9%8A%D9%82-Rocket-League.png'],
+  tekken:['https://upload.wikimedia.org/wikipedia/ar/9/9a/%D8%BA%D9%84%D8%A7%D9%81_%D9%81%D9%86%D9%8A_%D9%84%D9%84%D8%B9%D8%A8%D8%A9_%D8%AA%D9%8A%D9%83%D9%86_8.jpg','https://media.filgoal.com/news/verylarge/335984_0.jpg']
 };
-
-const BG_OVERLAYS = {
-  fifa: ['rgba(0,10,40,0.72)', 'rgba(0,20,10,0.70)'],
-  rl:   ['rgba(20,5,0,0.72)',  'rgba(10,0,20,0.70)'],
-  tekken:['rgba(10,0,5,0.72)', 'rgba(5,0,15,0.72)']
+const BG_OVERLAYS={
+  fifa:['rgba(0,10,40,0.72)','rgba(0,20,10,0.70)'],
+  rl:['rgba(20,5,0,0.72)','rgba(10,0,20,0.70)'],
+  tekken:['rgba(10,0,5,0.72)','rgba(5,0,15,0.72)']
 };
-
-const gameData = {
-  fifa:  {matches:[],fontSize:'normal',selectedBg:0,color:'#00d4ff',accent:'#003c78',name:'EA FC 26',icon:'⚽',borderColor:'#00d4ff',vsColor:'rgba(0,212,255,0.3)',timeBg:'rgba(0,212,255,0.1)'},
-  rl:    {matches:[],fontSize:'normal',selectedBg:0,color:'#ffaa00',accent:'#4d1200',name:'Rocket League',icon:'🚗',borderColor:'#ff6600',vsColor:'rgba(255,150,0,0.3)',timeBg:'rgba(255,120,0,0.1)'},
+const gameData={
+  fifa:{matches:[],fontSize:'normal',selectedBg:0,color:'#00d4ff',accent:'#003c78',name:'EA FC 26',icon:'⚽',borderColor:'#00d4ff',vsColor:'rgba(0,212,255,0.3)',timeBg:'rgba(0,212,255,0.1)'},
+  rl:{matches:[],fontSize:'normal',selectedBg:0,color:'#ffaa00',accent:'#4d1200',name:'Rocket League',icon:'🚗',borderColor:'#ff6600',vsColor:'rgba(255,150,0,0.3)',timeBg:'rgba(255,120,0,0.1)'},
   tekken:{matches:[],fontSize:'normal',selectedBg:0,color:'#ff6b35',accent:'#3d0015',name:'Tekken',icon:'👊',borderColor:'#cc2255',vsColor:'rgba(255,60,80,0.3)',timeBg:'rgba(255,50,80,0.1)'}
 };
 
-let currentGame='fifa';
+/* ✅ الإصلاح الرئيسي: تحويل الصورة إلى base64 */
+async function imgToBase64(url){
+  try{
+    const res=await fetch(url,{mode:'cors',cache:'force-cache'});
+    const blob=await res.blob();
+    return await new Promise((res,rej)=>{
+      const r=new FileReader();
+      r.onload=()=>res(r.result);
+      r.onerror=rej;
+      r.readAsDataURL(blob);
+    });
+  }catch(e){
+    return null;
+  }
+}
 
 function switchGame(game){
-  currentGame=game;
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.getElementById('section-'+game).classList.add('active');
   const tabs={fifa:'active-fifa',rl:'active-rl',tekken:'active-tekken'};
@@ -379,8 +329,7 @@ function switchGame(game){
 
 function selectBg(game,idx,el){
   gameData[game].selectedBg=idx;
-  const sel=document.getElementById(game+'-bg-selector');
-  sel.querySelectorAll('.bg-option').forEach(o=>{
+  document.getElementById(game+'-bg-selector').querySelectorAll('.bg-option').forEach(o=>{
     o.classList.remove('selected-fifa','selected-rl','selected-tekken');
   });
   el.classList.add('selected-'+game);
@@ -464,13 +413,15 @@ function getFontSize(key){
   return map[key]||map.normal;
 }
 
-function buildPreviewHTML(game,forPDF){
+/* يقبل bgBase64 اختياري — إذا موجود يُستخدم بدلاً من الـ URL */
+function buildPreviewHTML(game, bgBase64){
   saveMatchData(game);
   const g=gameData[game];
-  const bgUrl=BG_URLS[game][g.selectedBg];
   const overlay=BG_OVERLAYS[game][g.selectedBg];
   const title=document.getElementById(game+'-title').value||g.name+' - بطولة';
-  const dateVal=document.getElementById(game+'-date').value?new Date(document.getElementById(game+'-date').value).toLocaleString('ar-SA',{dateStyle:'full',timeStyle:'short'}):'التاريخ غير محدد';
+  const dateVal=document.getElementById(game+'-date').value
+    ?new Date(document.getElementById(game+'-date').value).toLocaleString('ar-SA',{dateStyle:'full',timeStyle:'short'})
+    :'التاريخ غير محدد';
   const venue=document.getElementById(game+'-venue').value||'';
   const fs=getFontSize(g.fontSize);
   const midPoint=Math.ceil(g.matches.length/2);
@@ -478,9 +429,10 @@ function buildPreviewHTML(game,forPDF){
   const col2=g.matches.slice(midPoint);
   const useTwoCols=g.matches.length>10;
 
-  const bgStyle=forPDF
-    ? `background-image:url('${bgUrl}');background-size:cover;background-position:center;`
-    : `background-color:#0f172a;`;
+  const bgSrc=bgBase64||BG_URLS[game][g.selectedBg];
+  const bgStyle=bgBase64
+    ?`background-image:url('${bgSrc}');background-size:cover;background-position:center;`
+    :`background-color:#0f172a;`;
 
   const tableStyle=`width:100%;border-collapse:collapse;background:rgba(0,0,0,0.4);table-layout:fixed;`;
   const thStyle=`background:rgba(0,0,0,0.5);padding:${fs.pad};text-align:center;border-bottom:2px solid ${g.borderColor};font-size:calc(${fs.cell} * 0.85);color:${g.color};`;
@@ -506,11 +458,9 @@ function buildPreviewHTML(game,forPDF){
       </tbody>
     </table>`;
 
-  const colsHTML=useTwoCols?`
-    <div style="display:flex;gap:12px;">
-      <div style="flex:1;min-width:0;">${makeTable(col1,1)}</div>
-      <div style="flex:1;min-width:0;">${makeTable(col2,col1.length+1)}</div>
-    </div>`:`<div>${makeTable(g.matches,1)}</div>`;
+  const colsHTML=useTwoCols
+    ?`<div style="display:flex;gap:12px;"><div style="flex:1;min-width:0;">${makeTable(col1,1)}</div><div style="flex:1;min-width:0;">${makeTable(col2,col1.length+1)}</div></div>`
+    :`<div>${makeTable(g.matches,1)}</div>`;
 
   return `
     <div style="${bgStyle}padding:0;border-radius:14px;overflow:hidden;color:white;border:2px solid ${g.borderColor}66;position:relative;">
@@ -533,7 +483,7 @@ function buildPreviewHTML(game,forPDF){
 }
 
 function showPreview(game){
-  const html=buildPreviewHTML(game,true);
+  const html=buildPreviewHTML(game,null);
   document.getElementById('preview-modal').innerHTML=`
     <div style="background:#0f172a;padding:16px;border-radius:14px;border:1px solid rgba(255,255,255,0.1);">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
@@ -555,35 +505,41 @@ async function downloadPDF(game){
   saveMatchData(game);
   if(gameData[game].matches.length===0){alert('أضف مباراة واحدة على الأقل');return;}
   const g=gameData[game];
+  const btn=document.getElementById('pdf-btn-'+game);
+  btn.textContent='⏳ جاري التحميل...';
+  btn.disabled=true;
+
+  /* ✅ الإصلاح: تحويل الصورة إلى base64 أولاً */
   const bgUrl=BG_URLS[game][g.selectedBg];
-  const overlay=BG_OVERLAYS[game][g.selectedBg];
+  const bgBase64=await imgToBase64(bgUrl);
 
-  // Pre-load background image
-  await new Promise((res)=>{
-    const img=new Image();
-    img.crossOrigin='anonymous';
-    img.onload=res;img.onerror=res;
-    img.src=bgUrl;
-  });
-
-  const html=buildPreviewHTML(game,true);
+  const html=buildPreviewHTML(game, bgBase64);
   const wrapper=document.createElement('div');
   wrapper.style.cssText='position:fixed;top:-9999px;left:-9999px;width:800px;background:#0f172a;padding:0;';
   wrapper.innerHTML=html;
   document.body.appendChild(wrapper);
-  await new Promise(r=>setTimeout(r,1200));
+  await new Promise(r=>setTimeout(r,800));
+
   try{
     const canvas=await html2canvas(wrapper.firstElementChild,{
-      scale:2.5,useCORS:true,allowTaint:true,
-      backgroundColor:'#0a0a1a',logging:false
+      scale:2.5,
+      useCORS:true,
+      allowTaint:true,
+      backgroundColor:'#0a0a1a',
+      logging:false
     });
     const{jsPDF}=window.jspdf;
     const pdf=new jsPDF('p','mm','a4');
     const imgW=210,imgH=(canvas.height*imgW)/canvas.width;
     pdf.addImage(canvas.toDataURL('image/png'),'PNG',0,0,imgW,imgH);
     pdf.save(`جدول-${g.name}-${Date.now()}.pdf`);
-  }catch(e){alert('خطأ في التحميل: '+e.message);}
+  }catch(e){
+    alert('خطأ في التحميل: '+e.message);
+  }
+
   document.body.removeChild(wrapper);
+  btn.textContent='⬇ تحميل PDF';
+  btn.disabled=false;
 }
 
 ['fifa','rl','tekken'].forEach(g=>{
