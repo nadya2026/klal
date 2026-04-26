@@ -8,108 +8,135 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI','Noto Sans Arabic',Tahoma,sans-serif}
 html,body{height:100%;overflow:hidden}
 body{background:#0f172a;color:#e2e8f0;display:flex;flex-direction:column}
-.app-header{padding:16px 20px;background:rgba(0,0,0,0.6);border-bottom:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
-.app-title{font-size:20px;font-weight:500;color:#fff}
-.app-subtitle{font-size:12px;color:#94a3b8;margin-top:2px}
-.app-badge{background:rgba(59,130,246,0.2);border:1px solid rgba(59,130,246,0.4);padding:5px 14px;border-radius:20px;font-size:12px;color:#93c5fd}
-.game-tabs{display:flex;gap:4px;padding:12px 20px;background:rgba(0,0,0,0.4);border-bottom:1px solid rgba(255,255,255,0.08);overflow-x:auto;flex-shrink:0}
-.game-tab{flex:1;min-width:110px;padding:10px 8px;border:1px solid transparent;border-radius:10px;cursor:pointer;font-size:12px;font-weight:500;display:flex;flex-direction:column;align-items:center;gap:5px;transition:all 0.3s;background:rgba(255,255,255,0.05);color:#94a3b8}
-.game-tab .tab-icon{font-size:20px}
-.game-tab .tab-badge{font-size:10px;padding:2px 8px;border-radius:10px}
-.game-tab.active-fifa{background:rgba(0,212,255,0.15);border-color:rgba(0,212,255,0.4);color:#00d4ff}
-.game-tab.active-rl{background:rgba(255,69,0,0.15);border-color:rgba(255,170,0,0.4);color:#ffaa00}
-.game-tab.active-tekken{background:rgba(139,0,0,0.25);border-color:rgba(255,107,53,0.4);color:#ff6b35}
-
-/* ✅ FIX 3: الأقسام تأخذ ارتفاع متبقي وتتحكم بالتمرير داخلياً */
+.app-header{padding:14px 20px;background:rgba(0,0,0,0.6);border-bottom:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.app-title{font-size:18px;font-weight:500;color:#fff}
+.app-subtitle{font-size:11px;color:#94a3b8;margin-top:2px}
+.app-badge{background:rgba(59,130,246,0.2);border:1px solid rgba(59,130,246,0.4);padding:4px 12px;border-radius:20px;font-size:11px;color:#93c5fd}
+.game-tabs{display:flex;gap:4px;padding:10px 16px;background:rgba(0,0,0,0.4);border-bottom:1px solid rgba(255,255,255,0.08);flex-shrink:0}
+.game-tab{flex:1;padding:9px 8px;border:1px solid transparent;border-radius:10px;cursor:pointer;font-size:12px;font-weight:500;display:flex;flex-direction:column;align-items:center;gap:4px;transition:all 0.3s;background:rgba(255,255,255,0.05);color:#94a3b8}
+.game-tab .ti{font-size:18px}
+.game-tab .tb{font-size:10px;padding:2px 7px;border-radius:10px}
+.game-tab.af{background:rgba(0,212,255,0.15);border-color:rgba(0,212,255,0.4);color:#00d4ff}
+.game-tab.ar{background:rgba(255,69,0,0.15);border-color:rgba(255,170,0,0.4);color:#ffaa00}
+.game-tab.at{background:rgba(139,0,0,0.25);border-color:rgba(255,107,53,0.4);color:#ff6b35}
 .sections-container{flex:1;overflow:hidden;position:relative}
 .section{display:none;height:100%;flex-direction:column;overflow:hidden}
 .section.active{display:flex}
-.fifa-section{background:linear-gradient(180deg,#0a1628 0%,#0d1f3d 100%)}
-.rl-section{background:linear-gradient(180deg,#1a0800 0%,#0d0500 100%)}
-.tekken-section{background:linear-gradient(180deg,#0a0010 0%,#150020 100%)}
-.section-hero{padding:20px;position:relative;overflow:hidden;flex-shrink:0}
-.fifa-hero{background:linear-gradient(135deg,rgba(0,60,120,0.8) 0%,rgba(0,20,60,0.9) 100%);border-bottom:2px solid #00d4ff}
-.rl-hero{background:linear-gradient(135deg,rgba(100,20,0,0.8) 0%,rgba(50,5,0,0.9) 100%);border-bottom:2px solid #ff6600}
-.tekken-hero{background:linear-gradient(135deg,rgba(80,0,20,0.8) 0%,rgba(30,0,15,0.9) 100%);border-bottom:2px solid #ff4488}
-.hero-grid{display:flex;align-items:center;gap:16px}
-.hero-logo{width:56px;height:56px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;flex-shrink:0}
-.fifa-logo-bg{background:linear-gradient(135deg,#003c78,#0066cc);border:2px solid #00d4ff;color:#00d4ff}
-.rl-logo-bg{background:linear-gradient(135deg,#4d1200,#ff4500);border:2px solid #ffaa00;color:#ffaa00}
-.tekken-logo-bg{background:linear-gradient(135deg,#3d0015,#8b0000);border:2px solid #ff6b35;color:#ff6b35}
-.hero-info h2{font-size:18px;font-weight:500}
-.hero-info p{font-size:12px;margin-top:3px;opacity:0.7}
-.hero-stats{display:flex;gap:14px;margin-top:10px}
-.hero-stat .num{font-size:18px;font-weight:500}
-.hero-stat .lbl{font-size:11px;opacity:0.6}
+.fs{background:linear-gradient(180deg,#0a1628,#0d1f3d)}
+.rs{background:linear-gradient(180deg,#1a0800,#0d0500)}
+.ts{background:linear-gradient(180deg,#0a0010,#150020)}
+.section-hero{padding:16px 20px;flex-shrink:0}
+.fh{background:linear-gradient(135deg,rgba(0,60,120,0.8),rgba(0,20,60,0.9));border-bottom:2px solid #00d4ff}
+.rh{background:linear-gradient(135deg,rgba(100,20,0,0.8),rgba(50,5,0,0.9));border-bottom:2px solid #ff6600}
+.th{background:linear-gradient(135deg,rgba(80,0,20,0.8),rgba(30,0,15,0.9));border-bottom:2px solid #ff4488}
+.hg{display:flex;align-items:center;gap:14px}
+.hl{width:50px;height:50px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;flex-shrink:0}
+.flb{background:linear-gradient(135deg,#003c78,#0066cc);border:2px solid #00d4ff;color:#00d4ff}
+.rlb{background:linear-gradient(135deg,#4d1200,#ff4500);border:2px solid #ffaa00;color:#ffaa00}
+.tlb{background:linear-gradient(135deg,#3d0015,#8b0000);border:2px solid #ff6b35;color:#ff6b35}
+.hi h2{font-size:16px;font-weight:500}
+.hi p{font-size:11px;margin-top:2px;opacity:0.7}
+.hs{display:flex;gap:14px;margin-top:8px}
+.hs .n{font-size:16px;font-weight:500}
+.hs .l{font-size:10px;opacity:0.6}
+.section-content{display:grid;grid-template-columns:290px 1fr;gap:0;flex:1;overflow:hidden;min-height:0}
+.sidebar{padding:14px;border-left:1px solid rgba(255,255,255,0.08);overflow-y:auto}
+.fsb{background:rgba(0,30,80,0.4)}
+.rsb{background:rgba(50,10,0,0.4)}
+.tsb{background:rgba(40,0,20,0.4)}
+.st{font-size:12px;font-weight:500;margin-bottom:10px;display:flex;align-items:center;gap:7px}
+.dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.df{background:#00d4ff}.dr{background:#ffaa00}.dt{background:#ff6b35}
+.fg{margin-bottom:10px}
+.fl{display:block;font-size:10px;color:#94a3b8;margin-bottom:4px}
+.fi{width:100%;padding:7px 9px;border-radius:6px;font-size:12px;background:rgba(255,255,255,0.07);color:white;border:1px solid rgba(255,255,255,0.12)}
+.fi:focus{outline:none}
+.fif:focus{border-color:#00d4ff}
+.rif:focus{border-color:#ffaa00}
+.tif:focus{border-color:#ff6b35}
+.btn{padding:8px 12px;border:none;border-radius:6px;font-size:11px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:5px;transition:all 0.2s;width:100%;justify-content:center;margin-bottom:6px}
+.bf{background:#00d4ff;color:#001a3d}
+.br{background:#ff6600;color:#fff}
+.bt{background:#cc2255;color:#fff}
+.bs{background:rgba(255,255,255,0.08);color:#e2e8f0;border:1px solid rgba(255,255,255,0.12)}
+.bs:hover{background:rgba(255,255,255,0.13)}
+.matches-panel{padding:14px;overflow-y:auto;flex:1;min-height:0}
+.mt{font-size:12px;font-weight:500;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;padding:4px 0 8px;z-index:2}
+.fmt{background:rgba(10,22,40,0.97)}
+.rmt{background:rgba(20,5,0,0.97)}
+.tmt{background:rgba(10,0,8,0.97)}
+.mc{font-size:10px;padding:2px 9px;border-radius:10px}
+.fmc{background:rgba(0,212,255,0.15);color:#00d4ff;border:1px solid rgba(0,212,255,0.3)}
+.rmc{background:rgba(255,170,0,0.15);color:#ffaa00;border:1px solid rgba(255,170,0,0.3)}
+.tmc{background:rgba(255,107,53,0.15);color:#ff6b35;border:1px solid rgba(255,107,53,0.3)}
+.match-card{border-radius:7px;padding:9px 11px;margin-bottom:7px;display:flex;align-items:center;gap:9px}
+.fcard{background:rgba(0,50,120,0.25);border:1px solid rgba(0,212,255,0.2)}
+.rcard{background:rgba(80,20,0,0.3);border:1px solid rgba(255,100,0,0.2)}
+.tcard{background:rgba(60,0,20,0.3);border:1px solid rgba(255,60,80,0.2)}
+/* ✅ FIX: رقم الدائرة يستخدم line-height فقط - لا flex */
+.mn{width:28px;height:28px;border-radius:50%;line-height:28px;text-align:center;font-size:12px;font-weight:700;flex-shrink:0;overflow:hidden}
+.fnm{background:linear-gradient(135deg,#003c78,#0066cc);color:#fff;border:1px solid rgba(0,212,255,0.5)}
+.rnm{background:linear-gradient(135deg,#4d1200,#cc3300);color:#fff;border:1px solid rgba(255,170,0,0.5)}
+.tnm{background:linear-gradient(135deg,#3d0015,#880030);color:#fff;border:1px solid rgba(255,107,53,0.5)}
+.mp{flex:1;display:flex;align-items:center;gap:6px}
+.pis{flex:1;padding:6px 7px;border-radius:5px;font-size:11px;background:rgba(255,255,255,0.07);color:white;border:1px solid rgba(255,255,255,0.1);text-align:center}
+.vsb{padding:2px 8px;border-radius:5px;font-size:10px;font-weight:700;flex-shrink:0}
+.fvs{background:rgba(0,212,255,0.2);color:#00d4ff}
+.rvs{background:rgba(255,150,0,0.2);color:#ffaa00}
+.tvs{background:rgba(255,60,80,0.2);color:#ff6b35}
+.tsm{width:62px;padding:6px 4px;border-radius:5px;font-size:10px;background:rgba(255,255,255,0.06);color:white;border:1px solid rgba(255,255,255,0.1);text-align:center}
+.db{width:22px;height:22px;border-radius:5px;background:rgba(239,68,68,0.15);border:none;color:#f87171;cursor:pointer;font-size:14px;line-height:22px;text-align:center;flex-shrink:0}
+.empty{text-align:center;padding:40px 20px;color:#4b5563}
+.ei{font-size:32px;margin-bottom:8px;opacity:0.4}
+.fc{display:flex;gap:4px;margin-top:6px}
+.fb{flex:1;padding:4px;border-radius:5px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.05);color:#94a3b8;cursor:pointer;font-size:10px;text-align:center}
+.fba{color:white}
+.ffa{background:rgba(0,212,255,0.2);border-color:rgba(0,212,255,0.4)}
+.fra{background:rgba(255,170,0,0.2);border-color:rgba(255,170,0,0.4)}
+.fta{background:rgba(255,107,53,0.2);border-color:rgba(255,107,53,0.4)}
+.bgs{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:6px}
+.bgo{position:relative;border-radius:6px;overflow:hidden;cursor:pointer;border:2px solid transparent;height:48px}
+.bgo img{width:100%;height:100%;object-fit:cover;display:block}
+.bgl{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.65);font-size:9px;color:#fff;text-align:center;padding:2px}
+.bgof{border-color:#00d4ff}
+.bgor{border-color:#ffaa00}
+.bgot{border-color:#ff6b35}
+.bgck{position:absolute;top:3px;right:3px;width:13px;height:13px;border-radius:50%;background:#00d4ff;display:none;align-items:center;justify-content:center;font-size:8px;color:#000;font-weight:700}
+.bgof .bgck,.bgor .bgck,.bgot .bgck{display:flex}
+.divider{height:1px;background:rgba(255,255,255,0.1);margin:10px 0}
 
-/* ✅ FIX 3: section-content يأخذ المساحة المتبقية مع تمرير مستقل */
-.section-content{display:grid;grid-template-columns:300px 1fr;gap:0;flex:1;overflow:hidden;min-height:0}
-.sidebar{padding:16px;border-left:1px solid rgba(255,255,255,0.08);overflow-y:auto}
-.fifa-sidebar{background:rgba(0,30,80,0.4)}
-.rl-sidebar{background:rgba(50,10,0,0.4)}
-.tekken-sidebar{background:rgba(40,0,20,0.4)}
-.sidebar-title{font-size:13px;font-weight:500;margin-bottom:12px;display:flex;align-items:center;gap:8px}
-.dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.dot-fifa{background:#00d4ff}.dot-rl{background:#ffaa00}.dot-tekken{background:#ff6b35}
-.form-group{margin-bottom:12px}
-.form-label{display:block;font-size:11px;color:#94a3b8;margin-bottom:5px}
-.form-input{width:100%;padding:8px 10px;border-radius:7px;font-size:13px;background:rgba(255,255,255,0.07);color:white;border:1px solid rgba(255,255,255,0.12);transition:border-color 0.2s}
-.form-input:focus{outline:none}
-.fifa-input:focus{border-color:#00d4ff}
-.rl-input:focus{border-color:#ffaa00}
-.tekken-input:focus{border-color:#ff6b35}
-.btn{padding:9px 14px;border:none;border-radius:7px;font-size:12px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:5px;transition:all 0.2s;width:100%;justify-content:center;margin-bottom:7px}
-.btn-fifa{background:#00d4ff;color:#001a3d}
-.btn-rl{background:#ff6600;color:#fff}
-.btn-tekken{background:#cc2255;color:#fff}
-.btn-secondary{background:rgba(255,255,255,0.08);color:#e2e8f0;border:1px solid rgba(255,255,255,0.12)}
-
-/* ✅ FIX 3: matches-panel يتمرر بشكل مستقل */
-.matches-panel{padding:16px;overflow-y:auto;flex:1;min-height:0}
-.matches-title{font-size:13px;font-weight:500;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:inherit;padding-top:4px;padding-bottom:8px;z-index:1}
-.match-count{font-size:11px;padding:3px 10px;border-radius:10px}
-.fifa-count{background:rgba(0,212,255,0.15);color:#00d4ff;border:1px solid rgba(0,212,255,0.3)}
-.rl-count{background:rgba(255,170,0,0.15);color:#ffaa00;border:1px solid rgba(255,170,0,0.3)}
-.tekken-count{background:rgba(255,107,53,0.15);color:#ff6b35;border:1px solid rgba(255,107,53,0.3)}
-.match-card{border-radius:8px;padding:10px 12px;margin-bottom:8px;display:flex;align-items:center;gap:10px}
-.fifa-card{background:rgba(0,50,120,0.25);border:1px solid rgba(0,212,255,0.2)}
-.rl-card{background:rgba(80,20,0,0.3);border:1px solid rgba(255,100,0,0.2)}
-.tekken-card{background:rgba(60,0,20,0.3);border:1px solid rgba(255,60,80,0.2)}
-
-/* ✅ FIX 1: الأرقام - استخدام line-height بدلاً من flex لتجنب مشاكل html2canvas */
-.match-num{width:28px;height:28px;border-radius:50%;line-height:28px;text-align:center;font-size:12px;font-weight:600;flex-shrink:0;display:inline-block}
-.num-fifa{background:linear-gradient(135deg,#003c78,#0066cc);color:#00d4ff;border:1px solid rgba(0,212,255,0.4)}
-.num-rl{background:linear-gradient(135deg,#4d1200,#cc3300);color:#ffaa00;border:1px solid rgba(255,170,0,0.4)}
-.num-tekken{background:linear-gradient(135deg,#3d0015,#880030);color:#ff6b35;border:1px solid rgba(255,107,53,0.4)}
-.match-players{flex:1;display:flex;align-items:center;gap:7px}
-.player-input-sm{flex:1;padding:6px 8px;border-radius:5px;font-size:12px;background:rgba(255,255,255,0.07);color:white;border:1px solid rgba(255,255,255,0.1);text-align:center}
-.vs-badge{padding:3px 9px;border-radius:5px;font-size:11px;font-weight:600;flex-shrink:0}
-.vs-fifa{background:rgba(0,212,255,0.2);color:#00d4ff}
-.vs-rl{background:rgba(255,150,0,0.2);color:#ffaa00}
-.vs-tekken{background:rgba(255,60,80,0.2);color:#ff6b35}
-.time-sm{width:65px;padding:6px 5px;border-radius:5px;font-size:11px;background:rgba(255,255,255,0.06);color:white;border:1px solid rgba(255,255,255,0.1);text-align:center}
-.del-btn{width:24px;height:24px;border-radius:5px;background:rgba(239,68,68,0.15);border:none;color:#f87171;cursor:pointer;font-size:14px;line-height:24px;text-align:center;flex-shrink:0}
-.empty-state{text-align:center;padding:50px 20px;color:#4b5563}
-.empty-icon{font-size:40px;margin-bottom:10px;opacity:0.4}
-.font-controls{display:flex;gap:5px;margin-top:8px}
-.font-btn{flex:1;padding:5px;border-radius:5px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.05);color:#94a3b8;cursor:pointer;font-size:11px;text-align:center}
-.font-btn.active{color:white}
-.fifa-font-active{background:rgba(0,212,255,0.2);border-color:rgba(0,212,255,0.4)}
-.rl-font-active{background:rgba(255,170,0,0.2);border-color:rgba(255,170,0,0.4)}
-.tekken-font-active{background:rgba(255,107,53,0.2);border-color:rgba(255,107,53,0.4)}
-.bg-selector{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px}
-.bg-option{position:relative;border-radius:7px;overflow:hidden;cursor:pointer;border:2px solid transparent;transition:all 0.2s;height:52px}
-.bg-option img{width:100%;height:100%;object-fit:cover;display:block}
-.bg-option .bg-label{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.65);font-size:10px;color:#fff;text-align:center;padding:3px}
-.bg-option.selected-fifa{border-color:#00d4ff}
-.bg-option.selected-rl{border-color:#ffaa00}
-.bg-option.selected-tekken{border-color:#ff6b35}
-.bg-option .check{position:absolute;top:3px;right:3px;width:14px;height:14px;border-radius:50%;background:#00d4ff;display:none;align-items:center;justify-content:center;font-size:9px;color:#000;font-weight:700}
-.bg-option.selected-fifa .check,.bg-option.selected-rl .check,.bg-option.selected-tekken .check{display:flex}
+/* ===== أرشيف ===== */
+.archive-box{border-radius:8px;overflow:hidden;margin-top:6px;border:1px solid rgba(255,255,255,0.1)}
+.archive-header{padding:8px 11px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;font-size:11px;font-weight:500;user-select:none}
+.afh{background:rgba(0,212,255,0.12);color:#00d4ff}
+.arh{background:rgba(255,170,0,0.12);color:#ffaa00}
+.ath{background:rgba(255,107,53,0.12);color:#ff6b35}
+.archive-header .arrow{transition:transform 0.2s;font-style:normal;font-size:10px}
+.archive-body{display:none;padding:8px}
+.archive-body.open{display:block}
+.arc-list{max-height:200px;overflow-y:auto;margin-bottom:7px}
+.arc-item{border-radius:6px;padding:7px 9px;margin-bottom:5px;cursor:pointer;transition:background 0.2s;border:1px solid transparent}
+.arc-item:hover{border-color:rgba(255,255,255,0.15)}
+.afi{background:rgba(0,212,255,0.06)}
+.ari{background:rgba(255,170,0,0.06)}
+.ati{background:rgba(255,107,53,0.06)}
+.arc-name{font-size:11px;font-weight:500;color:#e2e8f0}
+.arc-meta{font-size:10px;color:#6b7280;margin-top:2px}
+.arc-actions{display:flex;gap:4px;margin-top:5px}
+.arc-btn{padding:3px 8px;border:none;border-radius:4px;font-size:10px;cursor:pointer;font-weight:500}
+.arc-load{background:rgba(34,197,94,0.2);color:#4ade80;border:1px solid rgba(34,197,94,0.3)}
+.arc-del{background:rgba(239,68,68,0.15);color:#f87171;border:1px solid rgba(239,68,68,0.2)}
+.arc-empty{font-size:10px;color:#4b5563;text-align:center;padding:12px}
+.save-area{display:flex;gap:5px}
+.save-input{flex:1;padding:6px 8px;border-radius:5px;font-size:11px;background:rgba(255,255,255,0.07);color:white;border:1px solid rgba(255,255,255,0.12)}
+.save-btn{padding:6px 10px;border:none;border-radius:5px;font-size:11px;cursor:pointer;font-weight:500;white-space:nowrap}
+.sfb{background:#00d4ff;color:#001a3d}
+.srb{background:#ff6600;color:#fff}
+.stb{background:#cc2255;color:#fff}
 
 /* preview overlay */
-#preview-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:100;align-items:center;justify-content:center;padding:20px}
-#preview-modal{width:100%;max-width:860px;max-height:90vh;overflow-y:auto;border-radius:14px}
+#prev-ov{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:100;align-items:center;justify-content:center;padding:20px}
+#prev-mod{width:100%;max-width:860px;max-height:90vh;overflow-y:auto;border-radius:14px}
 </style>
 </head>
 <body>
@@ -123,260 +150,378 @@ body{background:#0f172a;color:#e2e8f0;display:flex;flex-direction:column}
 </div>
 
 <div class="game-tabs">
-  <button class="game-tab active-fifa" id="tab-fifa" onclick="switchGame('fifa')">
-    <span class="tab-icon">⚽</span>
-    <span>EA FC 26</span>
-    <span class="tab-badge" id="badge-fifa" style="background:rgba(0,212,255,0.15);color:#00d4ff;">0 مباراة</span>
+  <button class="game-tab af" id="tab-fifa" onclick="switchGame('fifa')">
+    <span class="ti">⚽</span><span>EA FC 26</span>
+    <span class="tb" id="badge-fifa" style="background:rgba(0,212,255,0.15);color:#00d4ff;">0 مباراة</span>
   </button>
   <button class="game-tab" id="tab-rl" onclick="switchGame('rl')">
-    <span class="tab-icon">🚗</span>
-    <span>Rocket League</span>
-    <span class="tab-badge" id="badge-rl" style="background:rgba(255,170,0,0.1);color:#ffaa00;">0 مباراة</span>
+    <span class="ti">🚗</span><span>Rocket League</span>
+    <span class="tb" id="badge-rl" style="background:rgba(255,170,0,0.1);color:#ffaa00;">0 مباراة</span>
   </button>
   <button class="game-tab" id="tab-tekken" onclick="switchGame('tekken')">
-    <span class="tab-icon">👊</span>
-    <span>Tekken</span>
-    <span class="tab-badge" id="badge-tekken" style="background:rgba(255,107,53,0.1);color:#ff6b35;">0 مباراة</span>
+    <span class="ti">👊</span><span>Tekken</span>
+    <span class="tb" id="badge-tekken" style="background:rgba(255,107,53,0.1);color:#ff6b35;">0 مباراة</span>
   </button>
 </div>
 
 <div class="sections-container">
 
 <!-- FIFA -->
-<div class="section fifa-section active" id="section-fifa">
-  <div class="section-hero fifa-hero">
-    <div class="hero-grid">
-      <div class="hero-logo fifa-logo-bg">FC</div>
-      <div class="hero-info">
+<div class="section fs active" id="section-fifa">
+  <div class="section-hero fh">
+    <div class="hg">
+      <div class="hl flb">FC</div>
+      <div class="hi">
         <h2 style="color:#00d4ff;">قسم EA FC 26</h2>
-        <p>بطولة كرة القدم الافتراضية الاحترافية</p>
-        <div class="hero-stats">
-          <div class="hero-stat"><div class="num" style="color:#00d4ff;" id="fifa-total">0</div><div class="lbl">مباراة</div></div>
-          <div class="hero-stat"><div class="num" style="color:#00d4ff;" id="fifa-players-count">0</div><div class="lbl">لاعب</div></div>
+        <p>بطولة كرة القدم الافتراضية</p>
+        <div class="hs">
+          <div><div class="n" style="color:#00d4ff;" id="fifa-total">0</div><div class="l">مباراة</div></div>
+          <div><div class="n" style="color:#00d4ff;" id="fifa-pc">0</div><div class="l">لاعب</div></div>
         </div>
       </div>
     </div>
   </div>
   <div class="section-content">
-    <div class="sidebar fifa-sidebar">
-      <div class="sidebar-title"><span class="dot dot-fifa"></span> إعدادات البطولة</div>
-      <div class="form-group"><label class="form-label">اسم البطولة</label><input type="text" class="form-input fifa-input" id="fifa-title" placeholder="بطولة الربيع 2026"></div>
-      <div class="form-group"><label class="form-label">التاريخ والوقت</label><input type="datetime-local" class="form-input fifa-input" id="fifa-date"></div>
-      <div class="form-group"><label class="form-label">المكان</label><input type="text" class="form-input fifa-input" id="fifa-venue" placeholder="الرياض - قاعة الألعاب"></div>
-      <div class="form-group">
-        <label class="form-label">خلفية PDF</label>
-        <div class="bg-selector" id="fifa-bg-selector">
-          <div class="bg-option selected-fifa" data-game="fifa" data-idx="0" onclick="selectBg('fifa',0,this)">
-            <img src="fc26.png" alt="bg1" onerror="this.style.background='#003c78';this.style.display='block'">
-            <div class="bg-label">ملعب ليلي</div><div class="check">✓</div>
-          </div>
-          <div class="bg-option" data-game="fifa" data-idx="1" onclick="selectBg('fifa',1,this)">
-            <img src="fc261.jpg" alt="bg2" onerror="this.style.background='#003c78';this.style.display='block'">
-            <div class="bg-label">أرضية خضراء</div><div class="check">✓</div>
+    <div class="sidebar fsb">
+      <div class="st"><span class="dot df"></span>إعدادات البطولة</div>
+      <div class="fg"><label class="fl">اسم البطولة</label><input type="text" class="fi fif" id="fifa-title" placeholder="بطولة الربيع 2026"></div>
+      <div class="fg"><label class="fl">التاريخ والوقت</label><input type="datetime-local" class="fi fif" id="fifa-date"></div>
+      <div class="fg"><label class="fl">المكان</label><input type="text" class="fi fif" id="fifa-venue" placeholder="الرياض - قاعة الألعاب"></div>
+      <div class="fg">
+        <label class="fl">خلفية PDF</label>
+        <div class="bgs" id="fifa-bgs">
+          <div class="bgo bgof" onclick="selBg('fifa',0,this)"><img src="fc26.png" alt=""><div class="bgl">ملعب ليلي</div><div class="bgck">✓</div></div>
+          <div class="bgo" onclick="selBg('fifa',1,this)"><img src="fc261.jpg" alt=""><div class="bgl">أرضية خضراء</div><div class="bgck">✓</div></div>
+        </div>
+      </div>
+      <div class="fg">
+        <label class="fl">حجم الخط</label>
+        <div class="fc" id="fifa-fc">
+          <div class="fb fba ffa" onclick="setFs('fifa','normal',this)">عادي</div>
+          <div class="fb" onclick="setFs('fifa','medium',this)">متوسط</div>
+          <div class="fb" onclick="setFs('fifa','large',this)">كبير</div>
+          <div class="fb" onclick="setFs('fifa','xlarge',this)">جداً</div>
+        </div>
+      </div>
+      <button class="btn bf" onclick="addMatch('fifa')">+ إضافة مباراة</button>
+      <button class="btn bs" onclick="showPreview('fifa')">👁 معاينة الجدول</button>
+      <button class="btn bs" id="pdf-btn-fifa" onclick="downloadPDF('fifa')">⬇ تحميل PDF</button>
+      <div class="divider"></div>
+      <!-- أرشيف FIFA -->
+      <div class="archive-box">
+        <div class="archive-header afh" onclick="toggleArchive('fifa')">
+          <span>📦 أرشيف البطولات</span>
+          <span class="arrow" id="arr-fifa">▾</span>
+        </div>
+        <div class="archive-body" id="arc-body-fifa">
+          <div class="arc-list" id="arc-list-fifa"></div>
+          <div class="save-area">
+            <input type="text" class="save-input" id="arc-name-fifa" placeholder="اسم النسخة...">
+            <button class="save-btn sfb" onclick="saveArchive('fifa')">حفظ</button>
           </div>
         </div>
       </div>
-      <div class="form-group">
-        <label class="form-label">حجم الخط</label>
-        <div class="font-controls" id="fifa-font-controls">
-          <div class="font-btn active fifa-font-active" data-size="normal" onclick="setFontSize('fifa','normal',this)">عادي</div>
-          <div class="font-btn" data-size="medium" onclick="setFontSize('fifa','medium',this)">متوسط</div>
-          <div class="font-btn" data-size="large" onclick="setFontSize('fifa','large',this)">كبير</div>
-          <div class="font-btn" data-size="xlarge" onclick="setFontSize('fifa','xlarge',this)">جداً</div>
-        </div>
-      </div>
-      <button class="btn btn-fifa" onclick="addMatch('fifa')">+ إضافة مباراة</button>
-      <button class="btn btn-secondary" onclick="showPreview('fifa')">👁 معاينة الجدول</button>
-      <button class="btn btn-secondary" id="pdf-btn-fifa" onclick="downloadPDF('fifa')">⬇ تحميل PDF</button>
     </div>
-    <div class="matches-panel" id="panel-fifa" style="background:rgba(0,15,40,0.3)">
-      <div class="matches-title" style="background:rgba(0,15,40,0.95)"><span>قائمة المباريات</span><span class="match-count fifa-count" id="fifa-count-badge">0 مباراة</span></div>
-      <div id="fifa-matches"><div class="empty-state"><div class="empty-icon">⚽</div><p>لا توجد مباريات بعد</p><p style="font-size:11px;margin-top:5px;color:#6b7280;">اضغط "إضافة مباراة" للبدء</p></div></div>
+    <div class="matches-panel" style="background:rgba(0,15,40,0.3)">
+      <div class="mt fmt"><span>قائمة المباريات</span><span class="mc fmc" id="fifa-cb">0 مباراة</span></div>
+      <div id="fifa-matches"><div class="empty"><div class="ei">⚽</div><p>لا توجد مباريات بعد</p><p style="font-size:10px;margin-top:4px;color:#6b7280;">اضغط "إضافة مباراة" للبدء</p></div></div>
     </div>
   </div>
 </div>
 
 <!-- Rocket League -->
-<div class="section rl-section" id="section-rl">
-  <div class="section-hero rl-hero">
-    <div class="hero-grid">
-      <div class="hero-logo rl-logo-bg">RL</div>
-      <div class="hero-info">
+<div class="section rs" id="section-rl">
+  <div class="section-hero rh">
+    <div class="hg">
+      <div class="hl rlb">RL</div>
+      <div class="hi">
         <h2 style="color:#ffaa00;">قسم Rocket League</h2>
-        <p>بطولة كرة القدم بالسيارات المجنونة</p>
-        <div class="hero-stats">
-          <div class="hero-stat"><div class="num" style="color:#ffaa00;" id="rl-total">0</div><div class="lbl">مباراة</div></div>
-          <div class="hero-stat"><div class="num" style="color:#ffaa00;" id="rl-players-count">0</div><div class="lbl">لاعب</div></div>
+        <p>بطولة كرة القدم بالسيارات</p>
+        <div class="hs">
+          <div><div class="n" style="color:#ffaa00;" id="rl-total">0</div><div class="l">مباراة</div></div>
+          <div><div class="n" style="color:#ffaa00;" id="rl-pc">0</div><div class="l">لاعب</div></div>
         </div>
       </div>
     </div>
   </div>
   <div class="section-content">
-    <div class="sidebar rl-sidebar">
-      <div class="sidebar-title"><span class="dot dot-rl"></span> إعدادات البطولة</div>
-      <div class="form-group"><label class="form-label">اسم البطولة</label><input type="text" class="form-input rl-input" id="rl-title" placeholder="بطولة RL الخليج"></div>
-      <div class="form-group"><label class="form-label">التاريخ والوقت</label><input type="datetime-local" class="form-input rl-input" id="rl-date"></div>
-      <div class="form-group"><label class="form-label">المكان</label><input type="text" class="form-input rl-input" id="rl-venue" placeholder="جدة - مركز الترفيه"></div>
-      <div class="form-group">
-        <label class="form-label">خلفية PDF</label>
-        <div class="bg-selector" id="rl-bg-selector">
-          <div class="bg-option selected-rl" data-game="rl" data-idx="0" onclick="selectBg('rl',0,this)">
-            <img src="https://cdn.salla.sa/ldYYj/hmyhRSGLylgwczJ2boqDLfQjDopAdwOPppLJqTkD.jpg" alt="bg1">
-            <div class="bg-label">سيارات مضيئة</div><div class="check">✓</div>
-          </div>
-          <div class="bg-option" data-game="rl" data-idx="1" onclick="selectBg('rl',1,this)">
-            <img src="https://kuwaitigames.com/wp-content/uploads/2023/12/%D8%B1%D9%88%D9%83%D8%AA-%D9%84%D9%8A%D9%82-Rocket-League.png" alt="bg2">
-            <div class="bg-label">ملعب مستقبلي</div><div class="check">✓</div>
+    <div class="sidebar rsb">
+      <div class="st"><span class="dot dr"></span>إعدادات البطولة</div>
+      <div class="fg"><label class="fl">اسم البطولة</label><input type="text" class="fi rif" id="rl-title" placeholder="بطولة RL الخليج"></div>
+      <div class="fg"><label class="fl">التاريخ والوقت</label><input type="datetime-local" class="fi rif" id="rl-date"></div>
+      <div class="fg"><label class="fl">المكان</label><input type="text" class="fi rif" id="rl-venue" placeholder="جدة - مركز الترفيه"></div>
+      <div class="fg">
+        <label class="fl">خلفية PDF</label>
+        <div class="bgs" id="rl-bgs">
+          <div class="bgo bgor" onclick="selBg('rl',0,this)"><img src="https://cdn.salla.sa/ldYYj/hmyhRSGLylgwczJ2boqDLfQjDopAdwOPppLJqTkD.jpg" alt=""><div class="bgl">سيارات مضيئة</div><div class="bgck">✓</div></div>
+          <div class="bgo" onclick="selBg('rl',1,this)"><img src="https://kuwaitigames.com/wp-content/uploads/2023/12/%D8%B1%D9%88%D9%83%D8%AA-%D9%84%D9%8A%D9%82-Rocket-League.png" alt=""><div class="bgl">ملعب مستقبلي</div><div class="bgck">✓</div></div>
+        </div>
+      </div>
+      <div class="fg">
+        <label class="fl">حجم الخط</label>
+        <div class="fc" id="rl-fc">
+          <div class="fb fba fra" onclick="setFs('rl','normal',this)">عادي</div>
+          <div class="fb" onclick="setFs('rl','medium',this)">متوسط</div>
+          <div class="fb" onclick="setFs('rl','large',this)">كبير</div>
+          <div class="fb" onclick="setFs('rl','xlarge',this)">جداً</div>
+        </div>
+      </div>
+      <button class="btn br" onclick="addMatch('rl')">+ إضافة مباراة</button>
+      <button class="btn bs" onclick="showPreview('rl')">👁 معاينة الجدول</button>
+      <button class="btn bs" id="pdf-btn-rl" onclick="downloadPDF('rl')">⬇ تحميل PDF</button>
+      <div class="divider"></div>
+      <div class="archive-box">
+        <div class="archive-header arh" onclick="toggleArchive('rl')">
+          <span>📦 أرشيف البطولات</span>
+          <span class="arrow" id="arr-rl">▾</span>
+        </div>
+        <div class="archive-body" id="arc-body-rl">
+          <div class="arc-list" id="arc-list-rl"></div>
+          <div class="save-area">
+            <input type="text" class="save-input" id="arc-name-rl" placeholder="اسم النسخة...">
+            <button class="save-btn srb" onclick="saveArchive('rl')">حفظ</button>
           </div>
         </div>
       </div>
-      <div class="form-group">
-        <label class="form-label">حجم الخط</label>
-        <div class="font-controls" id="rl-font-controls">
-          <div class="font-btn active rl-font-active" onclick="setFontSize('rl','normal',this)">عادي</div>
-          <div class="font-btn" onclick="setFontSize('rl','medium',this)">متوسط</div>
-          <div class="font-btn" onclick="setFontSize('rl','large',this)">كبير</div>
-          <div class="font-btn" onclick="setFontSize('rl','xlarge',this)">جداً</div>
-        </div>
-      </div>
-      <button class="btn btn-rl" onclick="addMatch('rl')">+ إضافة مباراة</button>
-      <button class="btn btn-secondary" onclick="showPreview('rl')">👁 معاينة الجدول</button>
-      <button class="btn btn-secondary" id="pdf-btn-rl" onclick="downloadPDF('rl')">⬇ تحميل PDF</button>
     </div>
-    <div class="matches-panel" id="panel-rl" style="background:rgba(30,5,0,0.3)">
-      <div class="matches-title" style="background:rgba(30,5,0,0.95)"><span>قائمة المباريات</span><span class="match-count rl-count" id="rl-count-badge">0 مباراة</span></div>
-      <div id="rl-matches"><div class="empty-state"><div class="empty-icon">🚗</div><p>لا توجد مباريات بعد</p></div></div>
+    <div class="matches-panel" style="background:rgba(30,5,0,0.3)">
+      <div class="mt rmt"><span>قائمة المباريات</span><span class="mc rmc" id="rl-cb">0 مباراة</span></div>
+      <div id="rl-matches"><div class="empty"><div class="ei">🚗</div><p>لا توجد مباريات بعد</p></div></div>
     </div>
   </div>
 </div>
 
 <!-- Tekken -->
-<div class="section tekken-section" id="section-tekken">
-  <div class="section-hero tekken-hero">
-    <div class="hero-grid">
-      <div class="hero-logo tekken-logo-bg">TK</div>
-      <div class="hero-info">
+<div class="section ts" id="section-tekken">
+  <div class="section-hero th">
+    <div class="hg">
+      <div class="hl tlb">TK</div>
+      <div class="hi">
         <h2 style="color:#ff6b35;">قسم Tekken</h2>
         <p>بطولة القتال الأسطورية</p>
-        <div class="hero-stats">
-          <div class="hero-stat"><div class="num" style="color:#ff6b35;" id="tekken-total">0</div><div class="lbl">مباراة</div></div>
-          <div class="hero-stat"><div class="num" style="color:#ff6b35;" id="tekken-players-count">0</div><div class="lbl">لاعب</div></div>
+        <div class="hs">
+          <div><div class="n" style="color:#ff6b35;" id="tekken-total">0</div><div class="l">مباراة</div></div>
+          <div><div class="n" style="color:#ff6b35;" id="tekken-pc">0</div><div class="l">لاعب</div></div>
         </div>
       </div>
     </div>
   </div>
   <div class="section-content">
-    <div class="sidebar tekken-sidebar">
-      <div class="sidebar-title"><span class="dot dot-tekken"></span> إعدادات البطولة</div>
-      <div class="form-group"><label class="form-label">اسم البطولة</label><input type="text" class="form-input tekken-input" id="tekken-title" placeholder="بطولة الفحول - Tekken"></div>
-      <div class="form-group"><label class="form-label">التاريخ والوقت</label><input type="datetime-local" class="form-input tekken-input" id="tekken-date"></div>
-      <div class="form-group"><label class="form-label">المكان</label><input type="text" class="form-input tekken-input" id="tekken-venue" placeholder="الدمام - كافيه الألعاب"></div>
-      <div class="form-group">
-        <label class="form-label">خلفية PDF</label>
-        <div class="bg-selector" id="tekken-bg-selector">
-          <div class="bg-option selected-tekken" data-game="tekken" data-idx="0" onclick="selectBg('tekken',0,this)">
-            <img src="https://upload.wikimedia.org/wikipedia/ar/9/9a/%D8%BA%D9%84%D8%A7%D9%81_%D9%81%D9%86%D9%8A_%D9%84%D9%84%D8%B9%D8%A8%D8%A9_%D8%AA%D9%8A%D9%83%D9%86_8.jpg" alt="bg1">
-            <div class="bg-label">قتال دراماتيكي</div><div class="check">✓</div>
-          </div>
-          <div class="bg-option" data-game="tekken" data-idx="1" onclick="selectBg('tekken',1,this)">
-            <img src="https://media.filgoal.com/news/verylarge/335984_0.jpg" alt="bg2">
-            <div class="bg-label">ألعاب مضيئة</div><div class="check">✓</div>
+    <div class="sidebar tsb">
+      <div class="st"><span class="dot dt"></span>إعدادات البطولة</div>
+      <div class="fg"><label class="fl">اسم البطولة</label><input type="text" class="fi tif" id="tekken-title" placeholder="بطولة الفحول - Tekken"></div>
+      <div class="fg"><label class="fl">التاريخ والوقت</label><input type="datetime-local" class="fi tif" id="tekken-date"></div>
+      <div class="fg"><label class="fl">المكان</label><input type="text" class="fi tif" id="tekken-venue" placeholder="الدمام - كافيه الألعاب"></div>
+      <div class="fg">
+        <label class="fl">خلفية PDF</label>
+        <div class="bgs" id="tekken-bgs">
+          <div class="bgo bgot" onclick="selBg('tekken',0,this)"><img src="https://upload.wikimedia.org/wikipedia/ar/9/9a/%D8%BA%D9%84%D8%A7%D9%81_%D9%81%D9%86%D9%8A_%D9%84%D9%84%D8%B9%D8%A8%D8%A9_%D8%AA%D9%8A%D9%83%D9%86_8.jpg" alt=""><div class="bgl">قتال دراماتيكي</div><div class="bgck">✓</div></div>
+          <div class="bgo" onclick="selBg('tekken',1,this)"><img src="https://media.filgoal.com/news/verylarge/335984_0.jpg" alt=""><div class="bgl">ألعاب مضيئة</div><div class="bgck">✓</div></div>
+        </div>
+      </div>
+      <div class="fg">
+        <label class="fl">حجم الخط</label>
+        <div class="fc" id="tekken-fc">
+          <div class="fb fba fta" onclick="setFs('tekken','normal',this)">عادي</div>
+          <div class="fb" onclick="setFs('tekken','medium',this)">متوسط</div>
+          <div class="fb" onclick="setFs('tekken','large',this)">كبير</div>
+          <div class="fb" onclick="setFs('tekken','xlarge',this)">جداً</div>
+        </div>
+      </div>
+      <button class="btn bt" onclick="addMatch('tekken')">+ إضافة مباراة</button>
+      <button class="btn bs" onclick="showPreview('tekken')">👁 معاينة الجدول</button>
+      <button class="btn bs" id="pdf-btn-tekken" onclick="downloadPDF('tekken')">⬇ تحميل PDF</button>
+      <div class="divider"></div>
+      <div class="archive-box">
+        <div class="archive-header ath" onclick="toggleArchive('tekken')">
+          <span>📦 أرشيف البطولات</span>
+          <span class="arrow" id="arr-tekken">▾</span>
+        </div>
+        <div class="archive-body" id="arc-body-tekken">
+          <div class="arc-list" id="arc-list-tekken"></div>
+          <div class="save-area">
+            <input type="text" class="save-input" id="arc-name-tekken" placeholder="اسم النسخة...">
+            <button class="save-btn stb" onclick="saveArchive('tekken')">حفظ</button>
           </div>
         </div>
       </div>
-      <div class="form-group">
-        <label class="form-label">حجم الخط</label>
-        <div class="font-controls" id="tekken-font-controls">
-          <div class="font-btn active tekken-font-active" onclick="setFontSize('tekken','normal',this)">عادي</div>
-          <div class="font-btn" onclick="setFontSize('tekken','medium',this)">متوسط</div>
-          <div class="font-btn" onclick="setFontSize('tekken','large',this)">كبير</div>
-          <div class="font-btn" onclick="setFontSize('tekken','xlarge',this)">جداً</div>
-        </div>
-      </div>
-      <button class="btn btn-tekken" onclick="addMatch('tekken')">+ إضافة مباراة</button>
-      <button class="btn btn-secondary" onclick="showPreview('tekken')">👁 معاينة الجدول</button>
-      <button class="btn btn-secondary" id="pdf-btn-tekken" onclick="downloadPDF('tekken')">⬇ تحميل PDF</button>
     </div>
-    <div class="matches-panel" id="panel-tekken" style="background:rgba(15,0,10,0.3)">
-      <div class="matches-title" style="background:rgba(15,0,10,0.95)"><span>قائمة المباريات</span><span class="match-count tekken-count" id="tekken-count-badge">0 مباراة</span></div>
-      <div id="tekken-matches"><div class="empty-state"><div class="empty-icon">👊</div><p>لا توجد مباريات بعد</p></div></div>
+    <div class="matches-panel" style="background:rgba(15,0,10,0.3)">
+      <div class="mt tmt"><span>قائمة المباريات</span><span class="mc tmc" id="tekken-cb">0 مباراة</span></div>
+      <div id="tekken-matches"><div class="empty"><div class="ei">👊</div><p>لا توجد مباريات بعد</p></div></div>
     </div>
   </div>
 </div>
 
 </div><!-- end sections-container -->
 
-<div id="preview-overlay">
-  <div id="preview-modal"></div>
+<div id="prev-ov">
+  <div id="prev-mod"></div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
-const BG_URLS={
+/* ===================== البيانات ===================== */
+const BG={
   fifa:['fc26.png','fc261.jpg'],
   rl:['https://cdn.salla.sa/ldYYj/hmyhRSGLylgwczJ2boqDLfQjDopAdwOPppLJqTkD.jpg','https://kuwaitigames.com/wp-content/uploads/2023/12/%D8%B1%D9%88%D9%83%D8%AA-%D9%84%D9%8A%D9%82-Rocket-League.png'],
   tekken:['https://upload.wikimedia.org/wikipedia/ar/9/9a/%D8%BA%D9%84%D8%A7%D9%81_%D9%81%D9%86%D9%8A_%D9%84%D9%84%D8%B9%D8%A8%D8%A9_%D8%AA%D9%8A%D9%83%D9%86_8.jpg','https://media.filgoal.com/news/verylarge/335984_0.jpg']
 };
-const BG_OVERLAYS={
+const OV={
   fifa:['rgba(0,10,40,0.72)','rgba(0,20,10,0.70)'],
   rl:['rgba(20,5,0,0.72)','rgba(10,0,20,0.70)'],
   tekken:['rgba(10,0,5,0.72)','rgba(5,0,15,0.72)']
 };
-const gameData={
-  fifa:{matches:[],fontSize:'normal',selectedBg:0,color:'#00d4ff',accent:'#003c78',name:'EA FC 26',icon:'⚽',borderColor:'#00d4ff',vsColor:'rgba(0,212,255,0.3)',timeBg:'rgba(0,212,255,0.1)'},
-  rl:{matches:[],fontSize:'normal',selectedBg:0,color:'#ffaa00',accent:'#4d1200',name:'Rocket League',icon:'🚗',borderColor:'#ff6600',vsColor:'rgba(255,150,0,0.3)',timeBg:'rgba(255,120,0,0.1)'},
-  tekken:{matches:[],fontSize:'normal',selectedBg:0,color:'#ff6b35',accent:'#3d0015',name:'Tekken',icon:'👊',borderColor:'#cc2255',vsColor:'rgba(255,60,80,0.3)',timeBg:'rgba(255,50,80,0.1)'}
+const GD={
+  fifa:{matches:[],fontSize:'normal',selBg:0,color:'#00d4ff',accent:'#003c78',name:'EA FC 26',icon:'⚽',bc:'#00d4ff',vs:'rgba(0,212,255,0.3)',tb:'rgba(0,212,255,0.1)'},
+  rl:{matches:[],fontSize:'normal',selBg:0,color:'#ffaa00',accent:'#4d1200',name:'Rocket League',icon:'🚗',bc:'#ff6600',vs:'rgba(255,150,0,0.3)',tb:'rgba(255,120,0,0.1)'},
+  tekken:{matches:[],fontSize:'normal',selBg:0,color:'#ff6b35',accent:'#3d0015',name:'Tekken',icon:'👊',bc:'#cc2255',vs:'rgba(255,60,80,0.3)',tb:'rgba(255,50,80,0.1)'}
 };
 
-async function imgToBase64(url){
-  try{
-    const res=await fetch(url,{mode:'cors',cache:'force-cache'});
-    const blob=await res.blob();
-    return await new Promise((res,rej)=>{
-      const r=new FileReader();
-      r.onload=()=>res(r.result);
-      r.onerror=rej;
-      r.readAsDataURL(blob);
-    });
-  }catch(e){return null;}
+/* ===================== الأرشيف - localStorage ===================== */
+const ARC_KEY='fcc26-archive-v1';
+function loadArc(){
+  try{return JSON.parse(localStorage.getItem(ARC_KEY))||{fifa:[],rl:[],tekken:[]};}
+  catch(e){return{fifa:[],rl:[],tekken:[]};}
+}
+function saveArc(data){try{localStorage.setItem(ARC_KEY,JSON.stringify(data));}catch(e){}}
+
+function saveArchive(game){
+  saveMatchData(game);
+  const g=GD[game];
+  if(g.matches.length===0){alert('لا توجد مباريات للحفظ');return;}
+  const nameEl=document.getElementById('arc-name-'+game);
+  const name=nameEl.value.trim()||('نسخة '+new Date().toLocaleDateString('ar-SA'));
+  const arc=loadArc();
+  arc[game].unshift({
+    id:Date.now(),
+    name:name,
+    savedAt:new Date().toLocaleString('ar-SA'),
+    matches:JSON.parse(JSON.stringify(g.matches)),
+    title:document.getElementById(game+'-title').value,
+    venue:document.getElementById(game+'-venue').value,
+    date:document.getElementById(game+'-date').value,
+    fontSize:g.fontSize,
+    selBg:g.selBg
+  });
+  saveArc(arc);
+  nameEl.value='';
+  renderArchive(game);
+  /* تأكيد بصري */
+  const btn=document.querySelector(`#arc-body-${game} .save-btn`);
+  const orig=btn.textContent;
+  btn.textContent='✓ تم';
+  setTimeout(()=>{btn.textContent=orig;},1200);
 }
 
+function loadVersion(game,id){
+  const arc=loadArc();
+  const ver=arc[game].find(v=>v.id===id);
+  if(!ver)return;
+  GD[game].matches=JSON.parse(JSON.stringify(ver.matches));
+  GD[game].fontSize=ver.fontSize||'normal';
+  GD[game].selBg=ver.selBg||0;
+  document.getElementById(game+'-title').value=ver.title||'';
+  document.getElementById(game+'-venue').value=ver.venue||'';
+  document.getElementById(game+'-date').value=ver.date||'';
+  /* تحديث واجهة حجم الخط */
+  document.getElementById(game+'-fc').querySelectorAll('.fb').forEach(b=>{
+    b.classList.remove('fba','ffa','fra','fta');
+  });
+  const activeBtn=document.querySelector(`#${game}-fc .fb[onclick*="${ver.fontSize||'normal'}"]`);
+  if(activeBtn){
+    activeBtn.classList.add('fba');
+    const cl={fifa:'ffa',rl:'fra',tekken:'fta'}[game];
+    activeBtn.classList.add(cl);
+  }
+  /* تحديث خلفية */
+  document.getElementById(game+'-bgs').querySelectorAll('.bgo').forEach((el,i)=>{
+    el.classList.remove('bgof','bgor','bgot');
+    if(i===ver.selBg){const cl={fifa:'bgof',rl:'bgor',tekken:'bgot'}[game];el.classList.add(cl);}
+  });
+  renderMatches(game);
+  /* إغلاق الأرشيف */
+  document.getElementById('arc-body-'+game).classList.remove('open');
+  document.getElementById('arr-'+game).textContent='▾';
+}
+
+function deleteVersion(game,id,e){
+  e.stopPropagation();
+  const arc=loadArc();
+  arc[game]=arc[game].filter(v=>v.id!==id);
+  saveArc(arc);
+  renderArchive(game);
+}
+
+function renderArchive(game){
+  const arc=loadArc();
+  const list=document.getElementById('arc-list-'+game);
+  const items=arc[game];
+  const ci={fifa:'afi',rl:'ari',tekken:'ati'}[game];
+  if(items.length===0){
+    list.innerHTML='<div class="arc-empty">لا توجد نسخ محفوظة بعد</div>';
+    return;
+  }
+  list.innerHTML=items.map(v=>`
+    <div class="arc-item ${ci}">
+      <div class="arc-name">${v.name}</div>
+      <div class="arc-meta">📅 ${v.savedAt} · ${v.matches.length} مباراة</div>
+      <div class="arc-actions">
+        <button class="arc-btn arc-load" onclick="loadVersion('${game}',${v.id})">📂 تحميل وتعديل</button>
+        <button class="arc-btn arc-del" onclick="deleteVersion('${game}',${v.id},event)">🗑 حذف</button>
+      </div>
+    </div>`).join('');
+}
+
+function toggleArchive(game){
+  const body=document.getElementById('arc-body-'+game);
+  const arr=document.getElementById('arr-'+game);
+  const isOpen=body.classList.contains('open');
+  body.classList.toggle('open');
+  arr.textContent=isOpen?'▾':'▴';
+  if(!isOpen)renderArchive(game);
+}
+
+/* ===================== تبديل الألعاب ===================== */
 function switchGame(game){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.getElementById('section-'+game).classList.add('active');
-  const tabs={fifa:'active-fifa',rl:'active-rl',tekken:'active-tekken'};
+  const cls={fifa:'af',rl:'ar',tekken:'at'};
   document.querySelectorAll('.game-tab').forEach(t=>t.className='game-tab');
-  document.getElementById('tab-'+game).classList.add('game-tab',tabs[game]);
+  document.getElementById('tab-'+game).classList.add('game-tab',cls[game]);
 }
 
-function selectBg(game,idx,el){
-  gameData[game].selectedBg=idx;
-  document.getElementById(game+'-bg-selector').querySelectorAll('.bg-option').forEach(o=>{
-    o.classList.remove('selected-fifa','selected-rl','selected-tekken');
+function selBg(game,idx,el){
+  GD[game].selBg=idx;
+  document.getElementById(game+'-bgs').querySelectorAll('.bgo').forEach(o=>{
+    o.classList.remove('bgof','bgor','bgot');
   });
-  el.classList.add('selected-'+game);
+  const cl={fifa:'bgof',rl:'bgor',tekken:'bgot'}[game];
+  el.classList.add(cl);
 }
 
-function setFontSize(game,size,el){
-  gameData[game].fontSize=size;
-  document.getElementById(game+'-font-controls').querySelectorAll('.font-btn').forEach(b=>b.classList.remove('active','fifa-font-active','rl-font-active','tekken-font-active'));
-  el.classList.add('active',game+'-font-active');
+function setFs(game,size,el){
+  GD[game].fontSize=size;
+  const cl={fifa:'ffa',rl:'fra',tekken:'fta'}[game];
+  document.getElementById(game+'-fc').querySelectorAll('.fb').forEach(b=>b.classList.remove('fba','ffa','fra','fta'));
+  el.classList.add('fba',cl);
 }
 
+/* ===================== إدارة المباريات ===================== */
 function addMatch(game){
-  gameData[game].matches.push({player1:'',player2:'',time:'19:00',id:Date.now()});
+  GD[game].matches.push({player1:'',player2:'',time:'19:00',id:Date.now()});
   renderMatches(game);
 }
 
 function deleteMatch(game,id){
-  gameData[game].matches=gameData[game].matches.filter(m=>m.id!==id);
+  GD[game].matches=GD[game].matches.filter(m=>m.id!==id);
   renderMatches(game);
 }
 
 function saveMatchData(game){
   const container=document.getElementById(game+'-matches');
-  gameData[game].matches.forEach(m=>{
+  GD[game].matches.forEach(m=>{
     const card=container.querySelector('[data-id="'+m.id+'"]');
     if(!card)return;
     m.player1=card.querySelector('.p1').value;
@@ -386,40 +531,40 @@ function saveMatchData(game){
 }
 
 function renderMatches(game){
-  const g=gameData[game];
+  const g=GD[game];
   const container=document.getElementById(game+'-matches');
-  const icons={fifa:'⚽',rl:'🚗',tekken:'👊'};
   if(g.matches.length===0){
-    container.innerHTML=`<div class="empty-state"><div class="empty-icon">${icons[game]}</div><p>لا توجد مباريات بعد</p><p style="font-size:11px;margin-top:5px;color:#6b7280;">اضغط "إضافة مباراة" للبدء</p></div>`;
+    const icons={fifa:'⚽',rl:'🚗',tekken:'👊'};
+    container.innerHTML=`<div class="empty"><div class="ei">${icons[game]}</div><p>لا توجد مباريات بعد</p></div>`;
     updateStats(game);return;
   }
-  /* ✅ FIX 1: استخدام line-height بدلاً من flex لضمان ظهور الأرقام */
   container.innerHTML=g.matches.map((m,i)=>`
-    <div class="match-card ${game}-card" data-id="${m.id}">
-      <div class="match-num num-${game}">${i+1}</div>
-      <div class="match-players">
-        <input type="text" class="player-input-sm p1" placeholder="اللاعب الأول" value="${m.player1}" oninput="saveMatchData('${game}')">
-        <span class="vs-badge vs-${game}">VS</span>
-        <input type="text" class="player-input-sm p2" placeholder="اللاعب الثاني" value="${m.player2}" oninput="saveMatchData('${game}')">
+    <div class="match-card ${game}card" data-id="${m.id}">
+      <div class="mn ${game}nm">${i+1}</div>
+      <div class="mp">
+        <input type="text" class="pis p1" placeholder="اللاعب الأول" value="${m.player1}" oninput="saveMatchData('${game}')">
+        <span class="vsb ${game}vs">VS</span>
+        <input type="text" class="pis p2" placeholder="اللاعب الثاني" value="${m.player2}" oninput="saveMatchData('${game}')">
       </div>
-      <input type="time" class="time-sm tm" value="${m.time}" onchange="saveMatchData('${game}')">
-      <button class="del-btn" onclick="deleteMatch('${game}',${m.id})">×</button>
+      <input type="time" class="tsm tm" value="${m.time}" onchange="saveMatchData('${game}')">
+      <button class="db" onclick="deleteMatch('${game}',${m.id})">×</button>
     </div>`).join('');
   updateStats(game);
 }
 
 function updateStats(game){
-  const g=gameData[game];
-  const count=g.matches.length;
-  document.getElementById(game+'-total').textContent=count;
-  const players=new Set();
-  g.matches.forEach(m=>{if(m.player1)players.add(m.player1);if(m.player2)players.add(m.player2)});
-  document.getElementById(game+'-players-count').textContent=players.size;
-  document.getElementById(game+'-count-badge').textContent=count+' مباراة';
-  document.getElementById('badge-'+game).textContent=count+' مباراة';
+  const g=GD[game];
+  const c=g.matches.length;
+  document.getElementById(game+'-total').textContent=c;
+  const ps=new Set();
+  g.matches.forEach(m=>{if(m.player1)ps.add(m.player1);if(m.player2)ps.add(m.player2)});
+  document.getElementById(game+'-pc').textContent=ps.size;
+  document.getElementById(game+'-cb').textContent=c+' مباراة';
+  document.getElementById('badge-'+game).textContent=c+' مباراة';
 }
 
-function formatTime(t){
+/* ===================== PDF / معاينة ===================== */
+function fmtTime(t){
   if(!t)return'غير محدد';
   const[h,m]=t.split(':').map(Number);
   const p=h>=12?'م':'ص';
@@ -427,151 +572,132 @@ function formatTime(t){
   return m===0?`${h12} ${p}`:`${h12}:${String(m).padStart(2,'0')} ${p}`;
 }
 
-function getFontSize(key){
-  const map={
-    normal:{title:'2.2rem',sub:'1.1rem',cell:'0.9rem',pad:'12px 10px'},
-    medium:{title:'2.4rem',sub:'1.2rem',cell:'1rem',pad:'14px 12px'},
-    large:{title:'2.6rem',sub:'1.3rem',cell:'1.1rem',pad:'16px 14px'},
-    xlarge:{title:'2.8rem',sub:'1.4rem',cell:'1.2rem',pad:'18px 16px'}
-  };
-  return map[key]||map.normal;
+/* ✅ FIX: حجم الدائرة وحجم الخط يتناسبان مع اختيار الحجم */
+const FSZ={
+  normal:{title:'2.0rem',sub:'1.0rem',cell:'0.88rem',pad:'10px 8px',circ:30,cfont:13},
+  medium:{title:'2.2rem',sub:'1.1rem',cell:'0.95rem',pad:'12px 10px',circ:32,cfont:13},
+  large: {title:'2.4rem',sub:'1.2rem',cell:'1.05rem',pad:'14px 12px',circ:35,cfont:14},
+  xlarge:{title:'2.6rem',sub:'1.3rem',cell:'1.15rem',pad:'16px 14px',circ:40,cfont:15}
+};
+
+async function imgToB64(url){
+  try{
+    const r=await fetch(url,{mode:'cors',cache:'force-cache'});
+    const b=await r.blob();
+    return await new Promise((res,rej)=>{const fr=new FileReader();fr.onload=()=>res(fr.result);fr.onerror=rej;fr.readAsDataURL(b);});
+  }catch(e){return null;}
 }
 
-/* ✅ FIX 2: دائرة الأرقام في PDF تستخدم line-height بدلاً من flex */
-function buildPreviewHTML(game,bgBase64){
+function buildHTML(game,bgB64){
   saveMatchData(game);
-  const g=gameData[game];
-  const overlay=BG_OVERLAYS[game][g.selectedBg];
+  const g=GD[game];
+  const ov=OV[game][g.selBg];
   const title=document.getElementById(game+'-title').value||g.name+' - بطولة';
-  const dateVal=document.getElementById(game+'-date').value
+  const dv=document.getElementById(game+'-date').value
     ?new Date(document.getElementById(game+'-date').value).toLocaleString('ar-SA',{dateStyle:'full',timeStyle:'short'})
     :'التاريخ غير محدد';
   const venue=document.getElementById(game+'-venue').value||'';
-  const fs=getFontSize(g.fontSize);
-  const midPoint=Math.ceil(g.matches.length/2);
-  const col1=g.matches.slice(0,midPoint);
-  const col2=g.matches.slice(midPoint);
-  const useTwoCols=g.matches.length>10;
-
-  const bgSrc=bgBase64||BG_URLS[game][g.selectedBg];
-  const bgStyle=bgBase64
-    ?`background-image:url('${bgSrc}');background-size:cover;background-position:center;`
-    :`background-color:#0f172a;`;
-
-  const tableStyle=`width:100%;border-collapse:collapse;background:rgba(0,0,0,0.4);table-layout:fixed;`;
-  const thStyle=`background:rgba(0,0,0,0.5);padding:${fs.pad};text-align:center;border-bottom:2px solid ${g.borderColor};font-size:calc(${fs.cell} * 0.85);color:${g.color};`;
-  const tdStyle=`padding:calc(${fs.cell} * 0.9) 8px;text-align:center;border-bottom:1px solid rgba(255,255,255,0.08);font-size:${fs.cell};color:white;vertical-align:middle;`;
-
-  /* ✅ FIX 2: الدائرة تستخدم line-height بدلاً من display:flex */
-  const numCircle=(n)=>`<div style="background:linear-gradient(135deg,${g.accent},${g.borderColor});border-radius:50%;width:30px;height:30px;line-height:30px;text-align:center;margin:0 auto;font-weight:700;font-size:13px;color:white;">${n}</div>`;
-
-  const makeTable=(arr,startNum)=>`
-    <table style="${tableStyle}">
+  const fs=FSZ[g.fontSize]||FSZ.normal;
+  const mid=Math.ceil(g.matches.length/2);
+  const c1=g.matches.slice(0,mid);
+  const c2=g.matches.slice(mid);
+  const two=g.matches.length>10;
+  const bgSrc=bgB64||BG[game][g.selBg];
+  const bgSt=bgB64?`background-image:url('${bgSrc}');background-size:cover;background-position:center;`:`background-color:#0f172a;`;
+  const tSt=`width:100%;border-collapse:collapse;background:rgba(0,0,0,0.4);table-layout:fixed;`;
+  const thSt=`background:rgba(0,0,0,0.5);padding:${fs.pad};text-align:center;border-bottom:2px solid ${g.bc};font-size:calc(${fs.cell} * 0.85);color:${g.color};`;
+  const tdSt=`padding:${fs.pad};text-align:center;border-bottom:1px solid rgba(255,255,255,0.08);font-size:${fs.cell};color:white;vertical-align:middle;`;
+  /* ✅ FIX: line-height بدلاً من flex + حجم الدائرة يتغير حسب حجم الخط */
+  const circ=(n)=>`<div style="background:linear-gradient(135deg,${g.accent},${g.bc});border-radius:50%;width:${fs.circ}px;height:${fs.circ}px;line-height:${fs.circ}px;text-align:center;margin:0 auto;font-weight:700;font-size:${fs.cfont}px;color:#fff;">${n}</div>`;
+  const mkTbl=(arr,s)=>`
+    <table style="${tSt}">
       <thead><tr>
-        <th style="${thStyle}width:42px;">#</th>
-        <th style="${thStyle}">اللاعب الأول</th>
-        <th style="${thStyle}width:55px;">VS</th>
-        <th style="${thStyle}">اللاعب الثاني</th>
-        <th style="${thStyle}width:80px;">الوقت</th>
+        <th style="${thSt}width:${fs.circ+14}px;">#</th>
+        <th style="${thSt}">اللاعب الأول</th>
+        <th style="${thSt}width:55px;">VS</th>
+        <th style="${thSt}">اللاعب الثاني</th>
+        <th style="${thSt}width:82px;">الوقت</th>
       </tr></thead>
       <tbody>${arr.map((m,i)=>`
         <tr>
-          <td style="${tdStyle}">${numCircle(startNum+i)}</td>
-          <td style="${tdStyle}font-weight:600;">${m.player1||'—'}</td>
-          <td style="${tdStyle}"><span style="background:${g.vsColor};padding:3px 10px;border-radius:20px;font-weight:700;font-size:12px;color:${g.color};">VS</span></td>
-          <td style="${tdStyle}font-weight:600;">${m.player2||'—'}</td>
-          <td style="${tdStyle}"><span style="background:${g.timeBg};padding:4px 8px;border-radius:6px;font-size:12px;border:1px solid ${g.borderColor}55;">${formatTime(m.time)}</span></td>
+          <td style="${tdSt}">${circ(s+i)}</td>
+          <td style="${tdSt}font-weight:600;">${m.player1||'—'}</td>
+          <td style="${tdSt}"><span style="background:${g.vs};padding:3px 10px;border-radius:20px;font-weight:700;font-size:12px;color:${g.color};">VS</span></td>
+          <td style="${tdSt}font-weight:600;">${m.player2||'—'}</td>
+          <td style="${tdSt}"><span style="background:${g.tb};padding:4px 7px;border-radius:6px;font-size:12px;border:1px solid ${g.bc}55;">${fmtTime(m.time)}</span></td>
         </tr>`).join('')}
       </tbody>
     </table>`;
-
-  const colsHTML=useTwoCols
-    ?`<div style="display:flex;gap:12px;"><div style="flex:1;min-width:0;">${makeTable(col1,1)}</div><div style="flex:1;min-width:0;">${makeTable(col2,col1.length+1)}</div></div>`
-    :`<div>${makeTable(g.matches,1)}</div>`;
-
+  const cols=two
+    ?`<div style="display:flex;gap:10px;"><div style="flex:1;min-width:0;">${mkTbl(c1,1)}</div><div style="flex:1;min-width:0;">${mkTbl(c2,c1.length+1)}</div></div>`
+    :`<div>${mkTbl(g.matches,1)}</div>`;
   return `
-    <div style="${bgStyle}padding:0;border-radius:14px;overflow:hidden;color:white;border:2px solid ${g.borderColor}66;position:relative;">
-      <div style="position:relative;z-index:1;background:${overlay};padding:28px 24px;min-height:100%;">
-        <div style="text-align:center;margin-bottom:24px;">
-          <div style="font-size:2.8rem;margin-bottom:10px;text-shadow:0 2px 12px rgba(0,0,0,0.9);">${g.icon}</div>
-          <h2 style="font-size:${fs.title};font-weight:700;color:${g.color};margin-bottom:8px;text-shadow:0 2px 12px rgba(0,0,0,0.9);">${title}</h2>
-          <p style="font-size:${fs.sub};opacity:0.9;margin-bottom:4px;text-shadow:0 1px 6px rgba(0,0,0,0.8);">${dateVal}</p>
-          ${venue?`<p style="font-size:0.9rem;opacity:0.75;margin-top:4px;text-shadow:0 1px 6px rgba(0,0,0,0.8);">📍 ${venue}</p>`:''}
+    <div style="${bgSt}padding:0;border-radius:14px;overflow:hidden;color:white;border:2px solid ${g.bc}66;position:relative;">
+      <div style="position:relative;z-index:1;background:${ov};padding:24px 20px;min-height:100%;">
+        <div style="text-align:center;margin-bottom:20px;">
+          <div style="font-size:2.6rem;margin-bottom:8px;text-shadow:0 2px 12px rgba(0,0,0,0.9);">${g.icon}</div>
+          <h2 style="font-size:${fs.title};font-weight:700;color:${g.color};margin-bottom:6px;text-shadow:0 2px 12px rgba(0,0,0,0.9);">${title}</h2>
+          <p style="font-size:${fs.sub};opacity:0.9;margin-bottom:3px;text-shadow:0 1px 6px rgba(0,0,0,0.8);">${dv}</p>
+          ${venue?`<p style="font-size:0.85rem;opacity:0.75;margin-top:3px;text-shadow:0 1px 6px rgba(0,0,0,0.8);">📍 ${venue}</p>`:''}
         </div>
         ${g.matches.length>0?`
-          ${colsHTML}
-          <div style="margin-top:18px;text-align:center;padding:10px;background:rgba(0,0,0,0.45);border-radius:8px;font-size:0.9rem;color:#94a3b8;border:1px solid rgba(255,255,255,0.1);">
+          ${cols}
+          <div style="margin-top:14px;text-align:center;padding:8px;background:rgba(0,0,0,0.45);border-radius:8px;font-size:0.85rem;color:#94a3b8;border:1px solid rgba(255,255,255,0.1);">
             إجمالي المباريات: <strong style="color:${g.color};">${g.matches.length}</strong>
           </div>`:`
-          <div style="text-align:center;padding:60px;color:#4b5563;"><div style="font-size:3rem;opacity:0.3;">${g.icon}</div><p style="margin-top:12px;">لا توجد مباريات</p></div>`}
-        <div style="height:20px;"></div>
+          <div style="text-align:center;padding:50px;color:#4b5563;"><div style="font-size:2.5rem;opacity:0.3;">${g.icon}</div></div>`}
+        <div style="height:16px;"></div>
       </div>
     </div>`;
 }
 
 function showPreview(game){
-  const html=buildPreviewHTML(game,null);
-  document.getElementById('preview-modal').innerHTML=`
-    <div style="background:#0f172a;padding:16px;border-radius:14px;border:1px solid rgba(255,255,255,0.1);">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+  const html=buildHTML(game,null);
+  document.getElementById('prev-mod').innerHTML=`
+    <div style="background:#0f172a;padding:14px;border-radius:14px;border:1px solid rgba(255,255,255,0.1);">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
         <span style="font-weight:500;color:#e2e8f0;">معاينة الجدول</span>
-        <button onclick="closePreview()" style="background:rgba(239,68,68,0.2);border:none;color:#f87171;padding:5px 12px;border-radius:6px;cursor:pointer;font-size:12px;">✕ إغلاق</button>
-      </div>
-      ${html}
-    </div>`;
-  const ov=document.getElementById('preview-overlay');
+        <button onclick="closePreview()" style="background:rgba(239,68,68,0.2);border:none;color:#f87171;padding:5px 12px;border-radius:6px;cursor:pointer;font-size:11px;">✕ إغلاق</button>
+      </div>${html}</div>`;
+  const ov=document.getElementById('prev-ov');
   ov.style.display='flex';
   ov.onclick=function(e){if(e.target===ov)closePreview()};
 }
 
-function closePreview(){
-  document.getElementById('preview-overlay').style.display='none';
-}
+function closePreview(){document.getElementById('prev-ov').style.display='none';}
 
 async function downloadPDF(game){
   saveMatchData(game);
-  if(gameData[game].matches.length===0){alert('أضف مباراة واحدة على الأقل');return;}
-  const g=gameData[game];
+  if(GD[game].matches.length===0){alert('أضف مباراة واحدة على الأقل');return;}
+  const g=GD[game];
   const btn=document.getElementById('pdf-btn-'+game);
   btn.textContent='⏳ جاري التحميل...';
   btn.disabled=true;
-
-  const bgUrl=BG_URLS[game][g.selectedBg];
-  const bgBase64=await imgToBase64(bgUrl);
-
-  const html=buildPreviewHTML(game,bgBase64);
-  const wrapper=document.createElement('div');
-  wrapper.style.cssText='position:fixed;top:-9999px;left:-9999px;width:800px;background:#0f172a;padding:0;font-family:Tahoma,Arial,sans-serif;direction:rtl;';
-  wrapper.innerHTML=html;
-  document.body.appendChild(wrapper);
+  const bgB64=await imgToB64(BG[game][g.selBg]);
+  const html=buildHTML(game,bgB64);
+  const wr=document.createElement('div');
+  wr.style.cssText='position:fixed;top:-9999px;left:-9999px;width:800px;background:#0f172a;direction:rtl;font-family:Tahoma,Arial,sans-serif;';
+  wr.innerHTML=html;
+  document.body.appendChild(wr);
   await new Promise(r=>setTimeout(r,900));
-
   try{
-    const canvas=await html2canvas(wrapper.firstElementChild,{
-      scale:2.5,
-      useCORS:true,
-      allowTaint:true,
-      backgroundColor:'#0a0a1a',
-      logging:false
-    });
+    const canvas=await html2canvas(wr.firstElementChild,{scale:2.5,useCORS:true,allowTaint:true,backgroundColor:'#0a0a1a',logging:false});
     const{jsPDF}=window.jspdf;
     const pdf=new jsPDF('p','mm','a4');
-    const imgW=210,imgH=(canvas.height*imgW)/canvas.width;
-    pdf.addImage(canvas.toDataURL('image/png'),'PNG',0,0,imgW,imgH);
+    const w=210,h=(canvas.height*w)/canvas.width;
+    pdf.addImage(canvas.toDataURL('image/png'),'PNG',0,0,w,h);
     pdf.save(`جدول-${g.name}-${Date.now()}.pdf`);
-  }catch(e){
-    alert('خطأ في التحميل: '+e.message);
-  }
-
-  document.body.removeChild(wrapper);
+  }catch(e){alert('خطأ: '+e.message);}
+  document.body.removeChild(wr);
   btn.textContent='⬇ تحميل PDF';
   btn.disabled=false;
 }
 
+/* ===================== تهيئة ===================== */
 ['fifa','rl','tekken'].forEach(g=>{
   const now=new Date();
-  const pad=n=>String(n).padStart(2,'0');
-  document.getElementById(g+'-date').value=`${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
+  const p=n=>String(n).padStart(2,'0');
+  document.getElementById(g+'-date').value=`${now.getFullYear()}-${p(now.getMonth()+1)}-${p(now.getDate())}T${p(now.getHours())}:${p(now.getMinutes())}`;
 });
 </script>
 </body>
