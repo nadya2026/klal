@@ -1,23 +1,33 @@
-
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>نظام بطولات FCC 26</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI','Noto Sans Arabic',Tahoma,sans-serif}
-body{background:#0f172a;color:#e2e8f0;min-height:100vh}
-.app-header{padding:16px 20px;background:rgba(0,0,0,0.6);border-bottom:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:space-between}
+html,body{height:100%;overflow:hidden}
+body{background:#0f172a;color:#e2e8f0;display:flex;flex-direction:column}
+.app-header{padding:16px 20px;background:rgba(0,0,0,0.6);border-bottom:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
 .app-title{font-size:20px;font-weight:500;color:#fff}
 .app-subtitle{font-size:12px;color:#94a3b8;margin-top:2px}
 .app-badge{background:rgba(59,130,246,0.2);border:1px solid rgba(59,130,246,0.4);padding:5px 14px;border-radius:20px;font-size:12px;color:#93c5fd}
-.game-tabs{display:flex;gap:4px;padding:12px 20px;background:rgba(0,0,0,0.4);border-bottom:1px solid rgba(255,255,255,0.08);overflow-x:auto}
-.game-tab{flex:1;min-width:110px;padding:10px 8px;border:none;border-radius:10px;cursor:pointer;font-size:12px;font-weight:500;display:flex;flex-direction:column;align-items:center;gap:5px;transition:all 0.3s;background:rgba(255,255,255,0.05);color:#94a3b8;border:1px solid transparent}
+.game-tabs{display:flex;gap:4px;padding:12px 20px;background:rgba(0,0,0,0.4);border-bottom:1px solid rgba(255,255,255,0.08);overflow-x:auto;flex-shrink:0}
+.game-tab{flex:1;min-width:110px;padding:10px 8px;border:1px solid transparent;border-radius:10px;cursor:pointer;font-size:12px;font-weight:500;display:flex;flex-direction:column;align-items:center;gap:5px;transition:all 0.3s;background:rgba(255,255,255,0.05);color:#94a3b8}
 .game-tab .tab-icon{font-size:20px}
 .game-tab .tab-badge{font-size:10px;padding:2px 8px;border-radius:10px}
 .game-tab.active-fifa{background:rgba(0,212,255,0.15);border-color:rgba(0,212,255,0.4);color:#00d4ff}
 .game-tab.active-rl{background:rgba(255,69,0,0.15);border-color:rgba(255,170,0,0.4);color:#ffaa00}
 .game-tab.active-tekken{background:rgba(139,0,0,0.25);border-color:rgba(255,107,53,0.4);color:#ff6b35}
-.section{display:none}.section.active{display:block}
+
+/* ✅ FIX 3: الأقسام تأخذ ارتفاع متبقي وتتحكم بالتمرير داخلياً */
+.sections-container{flex:1;overflow:hidden;position:relative}
+.section{display:none;height:100%;flex-direction:column;overflow:hidden}
+.section.active{display:flex}
 .fifa-section{background:linear-gradient(180deg,#0a1628 0%,#0d1f3d 100%)}
 .rl-section{background:linear-gradient(180deg,#1a0800 0%,#0d0500 100%)}
 .tekken-section{background:linear-gradient(180deg,#0a0010 0%,#150020 100%)}
-.section-hero{padding:20px;position:relative;overflow:hidden}
+.section-hero{padding:20px;position:relative;overflow:hidden;flex-shrink:0}
 .fifa-hero{background:linear-gradient(135deg,rgba(0,60,120,0.8) 0%,rgba(0,20,60,0.9) 100%);border-bottom:2px solid #00d4ff}
 .rl-hero{background:linear-gradient(135deg,rgba(100,20,0,0.8) 0%,rgba(50,5,0,0.9) 100%);border-bottom:2px solid #ff6600}
 .tekken-hero{background:linear-gradient(135deg,rgba(80,0,20,0.8) 0%,rgba(30,0,15,0.9) 100%);border-bottom:2px solid #ff4488}
@@ -31,8 +41,10 @@ body{background:#0f172a;color:#e2e8f0;min-height:100vh}
 .hero-stats{display:flex;gap:14px;margin-top:10px}
 .hero-stat .num{font-size:18px;font-weight:500}
 .hero-stat .lbl{font-size:11px;opacity:0.6}
-.section-content{display:grid;grid-template-columns:320px 1fr;gap:0}
-.sidebar{padding:16px;border-left:1px solid rgba(255,255,255,0.08)}
+
+/* ✅ FIX 3: section-content يأخذ المساحة المتبقية مع تمرير مستقل */
+.section-content{display:grid;grid-template-columns:300px 1fr;gap:0;flex:1;overflow:hidden;min-height:0}
+.sidebar{padding:16px;border-left:1px solid rgba(255,255,255,0.08);overflow-y:auto}
 .fifa-sidebar{background:rgba(0,30,80,0.4)}
 .rl-sidebar{background:rgba(50,10,0,0.4)}
 .tekken-sidebar{background:rgba(40,0,20,0.4)}
@@ -51,8 +63,10 @@ body{background:#0f172a;color:#e2e8f0;min-height:100vh}
 .btn-rl{background:#ff6600;color:#fff}
 .btn-tekken{background:#cc2255;color:#fff}
 .btn-secondary{background:rgba(255,255,255,0.08);color:#e2e8f0;border:1px solid rgba(255,255,255,0.12)}
-.matches-panel{padding:16px;overflow-y:auto}
-.matches-title{font-size:13px;font-weight:500;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
+
+/* ✅ FIX 3: matches-panel يتمرر بشكل مستقل */
+.matches-panel{padding:16px;overflow-y:auto;flex:1;min-height:0}
+.matches-title{font-size:13px;font-weight:500;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:inherit;padding-top:4px;padding-bottom:8px;z-index:1}
 .match-count{font-size:11px;padding:3px 10px;border-radius:10px}
 .fifa-count{background:rgba(0,212,255,0.15);color:#00d4ff;border:1px solid rgba(0,212,255,0.3)}
 .rl-count{background:rgba(255,170,0,0.15);color:#ffaa00;border:1px solid rgba(255,170,0,0.3)}
@@ -61,7 +75,9 @@ body{background:#0f172a;color:#e2e8f0;min-height:100vh}
 .fifa-card{background:rgba(0,50,120,0.25);border:1px solid rgba(0,212,255,0.2)}
 .rl-card{background:rgba(80,20,0,0.3);border:1px solid rgba(255,100,0,0.2)}
 .tekken-card{background:rgba(60,0,20,0.3);border:1px solid rgba(255,60,80,0.2)}
-.match-num{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;flex-shrink:0}
+
+/* ✅ FIX 1: الأرقام - استخدام line-height بدلاً من flex لتجنب مشاكل html2canvas */
+.match-num{width:28px;height:28px;border-radius:50%;line-height:28px;text-align:center;font-size:12px;font-weight:600;flex-shrink:0;display:inline-block}
 .num-fifa{background:linear-gradient(135deg,#003c78,#0066cc);color:#00d4ff;border:1px solid rgba(0,212,255,0.4)}
 .num-rl{background:linear-gradient(135deg,#4d1200,#cc3300);color:#ffaa00;border:1px solid rgba(255,170,0,0.4)}
 .num-tekken{background:linear-gradient(135deg,#3d0015,#880030);color:#ff6b35;border:1px solid rgba(255,107,53,0.4)}
@@ -72,7 +88,7 @@ body{background:#0f172a;color:#e2e8f0;min-height:100vh}
 .vs-rl{background:rgba(255,150,0,0.2);color:#ffaa00}
 .vs-tekken{background:rgba(255,60,80,0.2);color:#ff6b35}
 .time-sm{width:65px;padding:6px 5px;border-radius:5px;font-size:11px;background:rgba(255,255,255,0.06);color:white;border:1px solid rgba(255,255,255,0.1);text-align:center}
-.del-btn{width:24px;height:24px;border-radius:5px;background:rgba(239,68,68,0.15);border:none;color:#f87171;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.del-btn{width:24px;height:24px;border-radius:5px;background:rgba(239,68,68,0.15);border:none;color:#f87171;cursor:pointer;font-size:14px;line-height:24px;text-align:center;flex-shrink:0}
 .empty-state{text-align:center;padding:50px 20px;color:#4b5563}
 .empty-icon{font-size:40px;margin-bottom:10px;opacity:0.4}
 .font-controls{display:flex;gap:5px;margin-top:8px}
@@ -90,7 +106,13 @@ body{background:#0f172a;color:#e2e8f0;min-height:100vh}
 .bg-option.selected-tekken{border-color:#ff6b35}
 .bg-option .check{position:absolute;top:3px;right:3px;width:14px;height:14px;border-radius:50%;background:#00d4ff;display:none;align-items:center;justify-content:center;font-size:9px;color:#000;font-weight:700}
 .bg-option.selected-fifa .check,.bg-option.selected-rl .check,.bg-option.selected-tekken .check{display:flex}
+
+/* preview overlay */
+#preview-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:100;align-items:center;justify-content:center;padding:20px}
+#preview-modal{width:100%;max-width:860px;max-height:90vh;overflow-y:auto;border-radius:14px}
 </style>
+</head>
+<body>
 
 <div class="app-header">
   <div>
@@ -118,6 +140,8 @@ body{background:#0f172a;color:#e2e8f0;min-height:100vh}
   </button>
 </div>
 
+<div class="sections-container">
+
 <!-- FIFA -->
 <div class="section fifa-section active" id="section-fifa">
   <div class="section-hero fifa-hero">
@@ -143,11 +167,11 @@ body{background:#0f172a;color:#e2e8f0;min-height:100vh}
         <label class="form-label">خلفية PDF</label>
         <div class="bg-selector" id="fifa-bg-selector">
           <div class="bg-option selected-fifa" data-game="fifa" data-idx="0" onclick="selectBg('fifa',0,this)">
-            <img src="fc26.png" alt="bg1">
+            <img src="fc26.png" alt="bg1" onerror="this.style.background='#003c78';this.style.display='block'">
             <div class="bg-label">ملعب ليلي</div><div class="check">✓</div>
           </div>
           <div class="bg-option" data-game="fifa" data-idx="1" onclick="selectBg('fifa',1,this)">
-            <img src="fc261.jpg" alt="bg2">
+            <img src="fc261.jpg" alt="bg2" onerror="this.style.background='#003c78';this.style.display='block'">
             <div class="bg-label">أرضية خضراء</div><div class="check">✓</div>
           </div>
         </div>
@@ -165,8 +189,8 @@ body{background:#0f172a;color:#e2e8f0;min-height:100vh}
       <button class="btn btn-secondary" onclick="showPreview('fifa')">👁 معاينة الجدول</button>
       <button class="btn btn-secondary" id="pdf-btn-fifa" onclick="downloadPDF('fifa')">⬇ تحميل PDF</button>
     </div>
-    <div class="matches-panel">
-      <div class="matches-title"><span>قائمة المباريات</span><span class="match-count fifa-count" id="fifa-count-badge">0 مباراة</span></div>
+    <div class="matches-panel" id="panel-fifa" style="background:rgba(0,15,40,0.3)">
+      <div class="matches-title" style="background:rgba(0,15,40,0.95)"><span>قائمة المباريات</span><span class="match-count fifa-count" id="fifa-count-badge">0 مباراة</span></div>
       <div id="fifa-matches"><div class="empty-state"><div class="empty-icon">⚽</div><p>لا توجد مباريات بعد</p><p style="font-size:11px;margin-top:5px;color:#6b7280;">اضغط "إضافة مباراة" للبدء</p></div></div>
     </div>
   </div>
@@ -219,8 +243,8 @@ body{background:#0f172a;color:#e2e8f0;min-height:100vh}
       <button class="btn btn-secondary" onclick="showPreview('rl')">👁 معاينة الجدول</button>
       <button class="btn btn-secondary" id="pdf-btn-rl" onclick="downloadPDF('rl')">⬇ تحميل PDF</button>
     </div>
-    <div class="matches-panel">
-      <div class="matches-title"><span>قائمة المباريات</span><span class="match-count rl-count" id="rl-count-badge">0 مباراة</span></div>
+    <div class="matches-panel" id="panel-rl" style="background:rgba(30,5,0,0.3)">
+      <div class="matches-title" style="background:rgba(30,5,0,0.95)"><span>قائمة المباريات</span><span class="match-count rl-count" id="rl-count-badge">0 مباراة</span></div>
       <div id="rl-matches"><div class="empty-state"><div class="empty-icon">🚗</div><p>لا توجد مباريات بعد</p></div></div>
     </div>
   </div>
@@ -273,15 +297,17 @@ body{background:#0f172a;color:#e2e8f0;min-height:100vh}
       <button class="btn btn-secondary" onclick="showPreview('tekken')">👁 معاينة الجدول</button>
       <button class="btn btn-secondary" id="pdf-btn-tekken" onclick="downloadPDF('tekken')">⬇ تحميل PDF</button>
     </div>
-    <div class="matches-panel">
-      <div class="matches-title"><span>قائمة المباريات</span><span class="match-count tekken-count" id="tekken-count-badge">0 مباراة</span></div>
+    <div class="matches-panel" id="panel-tekken" style="background:rgba(15,0,10,0.3)">
+      <div class="matches-title" style="background:rgba(15,0,10,0.95)"><span>قائمة المباريات</span><span class="match-count tekken-count" id="tekken-count-badge">0 مباراة</span></div>
       <div id="tekken-matches"><div class="empty-state"><div class="empty-icon">👊</div><p>لا توجد مباريات بعد</p></div></div>
     </div>
   </div>
 </div>
 
-<div id="preview-overlay" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:100;align-items:center;justify-content:center;padding:20px;">
-  <div id="preview-modal" style="width:100%;max-width:860px;max-height:90vh;overflow-y:auto;border-radius:14px;"></div>
+</div><!-- end sections-container -->
+
+<div id="preview-overlay">
+  <div id="preview-modal"></div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -303,7 +329,6 @@ const gameData={
   tekken:{matches:[],fontSize:'normal',selectedBg:0,color:'#ff6b35',accent:'#3d0015',name:'Tekken',icon:'👊',borderColor:'#cc2255',vsColor:'rgba(255,60,80,0.3)',timeBg:'rgba(255,50,80,0.1)'}
 };
 
-/* ✅ الإصلاح الرئيسي: تحويل الصورة إلى base64 */
 async function imgToBase64(url){
   try{
     const res=await fetch(url,{mode:'cors',cache:'force-cache'});
@@ -314,9 +339,7 @@ async function imgToBase64(url){
       r.onerror=rej;
       r.readAsDataURL(blob);
     });
-  }catch(e){
-    return null;
-  }
+  }catch(e){return null;}
 }
 
 function switchGame(game){
@@ -370,6 +393,7 @@ function renderMatches(game){
     container.innerHTML=`<div class="empty-state"><div class="empty-icon">${icons[game]}</div><p>لا توجد مباريات بعد</p><p style="font-size:11px;margin-top:5px;color:#6b7280;">اضغط "إضافة مباراة" للبدء</p></div>`;
     updateStats(game);return;
   }
+  /* ✅ FIX 1: استخدام line-height بدلاً من flex لضمان ظهور الأرقام */
   container.innerHTML=g.matches.map((m,i)=>`
     <div class="match-card ${game}-card" data-id="${m.id}">
       <div class="match-num num-${game}">${i+1}</div>
@@ -413,8 +437,8 @@ function getFontSize(key){
   return map[key]||map.normal;
 }
 
-/* يقبل bgBase64 اختياري — إذا موجود يُستخدم بدلاً من الـ URL */
-function buildPreviewHTML(game, bgBase64){
+/* ✅ FIX 2: دائرة الأرقام في PDF تستخدم line-height بدلاً من flex */
+function buildPreviewHTML(game,bgBase64){
   saveMatchData(game);
   const g=gameData[game];
   const overlay=BG_OVERLAYS[game][g.selectedBg];
@@ -436,12 +460,15 @@ function buildPreviewHTML(game, bgBase64){
 
   const tableStyle=`width:100%;border-collapse:collapse;background:rgba(0,0,0,0.4);table-layout:fixed;`;
   const thStyle=`background:rgba(0,0,0,0.5);padding:${fs.pad};text-align:center;border-bottom:2px solid ${g.borderColor};font-size:calc(${fs.cell} * 0.85);color:${g.color};`;
-  const tdStyle=`padding:calc(${fs.cell} * 0.9) 8px;text-align:center;border-bottom:1px solid rgba(255,255,255,0.08);font-size:${fs.cell};color:white;`;
+  const tdStyle=`padding:calc(${fs.cell} * 0.9) 8px;text-align:center;border-bottom:1px solid rgba(255,255,255,0.08);font-size:${fs.cell};color:white;vertical-align:middle;`;
+
+  /* ✅ FIX 2: الدائرة تستخدم line-height بدلاً من display:flex */
+  const numCircle=(n)=>`<div style="background:linear-gradient(135deg,${g.accent},${g.borderColor});border-radius:50%;width:30px;height:30px;line-height:30px;text-align:center;margin:0 auto;font-weight:700;font-size:13px;color:white;">${n}</div>`;
 
   const makeTable=(arr,startNum)=>`
     <table style="${tableStyle}">
       <thead><tr>
-        <th style="${thStyle}width:40px;">#</th>
+        <th style="${thStyle}width:42px;">#</th>
         <th style="${thStyle}">اللاعب الأول</th>
         <th style="${thStyle}width:55px;">VS</th>
         <th style="${thStyle}">اللاعب الثاني</th>
@@ -449,7 +476,7 @@ function buildPreviewHTML(game, bgBase64){
       </tr></thead>
       <tbody>${arr.map((m,i)=>`
         <tr>
-          <td style="${tdStyle}"><div style="background:linear-gradient(135deg,${g.accent},${g.borderColor});border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;margin:0 auto;font-weight:600;font-size:13px;">${startNum+i}</div></td>
+          <td style="${tdStyle}">${numCircle(startNum+i)}</td>
           <td style="${tdStyle}font-weight:600;">${m.player1||'—'}</td>
           <td style="${tdStyle}"><span style="background:${g.vsColor};padding:3px 10px;border-radius:20px;font-weight:700;font-size:12px;color:${g.color};">VS</span></td>
           <td style="${tdStyle}font-weight:600;">${m.player2||'—'}</td>
@@ -509,16 +536,15 @@ async function downloadPDF(game){
   btn.textContent='⏳ جاري التحميل...';
   btn.disabled=true;
 
-  /* ✅ الإصلاح: تحويل الصورة إلى base64 أولاً */
   const bgUrl=BG_URLS[game][g.selectedBg];
   const bgBase64=await imgToBase64(bgUrl);
 
-  const html=buildPreviewHTML(game, bgBase64);
+  const html=buildPreviewHTML(game,bgBase64);
   const wrapper=document.createElement('div');
-  wrapper.style.cssText='position:fixed;top:-9999px;left:-9999px;width:800px;background:#0f172a;padding:0;';
+  wrapper.style.cssText='position:fixed;top:-9999px;left:-9999px;width:800px;background:#0f172a;padding:0;font-family:Tahoma,Arial,sans-serif;direction:rtl;';
   wrapper.innerHTML=html;
   document.body.appendChild(wrapper);
-  await new Promise(r=>setTimeout(r,800));
+  await new Promise(r=>setTimeout(r,900));
 
   try{
     const canvas=await html2canvas(wrapper.firstElementChild,{
@@ -548,3 +574,5 @@ async function downloadPDF(game){
   document.getElementById(g+'-date').value=`${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
 });
 </script>
+</body>
+</html>
